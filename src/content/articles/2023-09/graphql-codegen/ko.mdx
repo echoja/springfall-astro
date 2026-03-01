@@ -9,10 +9,13 @@ locale: "ko"
 ---
 
 import ArticleImage from "@modules/article/ArticleImage.astro";
-
+import img0 from "./assets/o.jpg";
+import img1 from "./assets/gifss.gif";
+import img2 from "./assets/o1.png";
+import img3 from "./assets/oo.png";
 
 <ArticleImage
-  src="/content/2023-09/graphql-codegen/o.jpg"
+  img={img0}
   alt="두렁에 빠진 차를 밀고 있는 사람들"
 >
   어떻게든 빠져나가야 한다! Photo by <a href="https://unsplash.com/@octoberroses?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"> Aubrey Odom </a> on <a href="https://unsplash.com/photos/T1L9Q5g7eIQ?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"> Unsplash </a>
@@ -676,8 +679,8 @@ const resolvers: IResolvers = {
 자동완성이 아름답게 먹히는 걸 볼 수 있습니다.
 
 <ArticleImage
-  width={400}
-  src="/content/2023-09/graphql-codegen/gifss.gif"
+
+  img={img1}
   alt="자동완성이 잘 되는 모습"
   caption="자동완성이 잘 되는 모습. 코파일럿이 자꾸 인터셉트 하지만 꿋꿋이 무시하고 진행합니다."
 />
@@ -758,14 +761,14 @@ const addRes = await client.mutate({
 이제 코드를 다시 편집해봅시다!
 
 <ArticleImage
-  width={400}
-  src="/content/2023-09/graphql-codegen/o1.png"
+
+  img={img2}
   alt=""
   caption="variables 에서 자동완성이 되는 모습"
 />
 <ArticleImage
-  width={300}
-  src="/content/2023-09/graphql-codegen/oo.png"
+
+  img={img3}
   alt=""
   caption="res.data 에서 자동완성이 되는 모습"
 />

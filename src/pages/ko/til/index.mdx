@@ -3,6 +3,9 @@ layout: "@layouts/TilLayout.astro"
 ---
 
 import ArticleImage from "@modules/article/ArticleImage.astro";
+import tilImg0 from "./assets/2026-01-16-1.png";
+import tilImg1 from "./assets/2026-01-04-1.png";
+import tilImg2 from "./assets/2026-01-01-1.png";
 import { Code } from "@modules/article/format-components";
 
 export const components = { Code };
@@ -429,7 +432,7 @@ export const components = { Code };
   - ~/.zshrc는 안 읽음 (대화형 셸 전용)
 - `Object.setPrototypeOf(this, SegmentSaveNoticeError.prototype);` 이 코드는 TypeScript ES5 이전 변환에서 일어나는 문제를 없애기 위함이었음. ES6 이상이면 걱정이 없다!
 - 이제 캡처 도구는 [Shottr](https://shottr.cc/)로 정착하려고 한다. (최소 2년). 나에게 딱 필요한 기능 - 고정 크기 캡처, Spotlight(S), **Blur(B)**. 그래... 이정도면 만족한다. 최근 업데이트가 그렇게 활발하진 않지만 2년은 가겠지.
-  <ArticleImage src="/content/til/2026-01-16-1.png" alt="" caption="blur 기능과 spotlight 기능이 아주 잘돼요" />
+  <ArticleImage img={tilImg0} alt="" caption="blur 기능과 spotlight 기능이 아주 잘돼요" />
 - Claude를 다시 설치해보았다. 회사에서 지원해줘서 바로 결제했다.
 - Claude 자기 스스로 mcp 추가하라고 하는데 잘 안 된다요. ㅎㅎ 직접 해주자. Opus가 그렇게 똑똑한가?
   - [Asana MCP 서버 연결](https://developers.asana.com/docs/using-asanas-mcp-server)
@@ -613,7 +616,7 @@ resource "digitalocean_monitor_alert" "k8s_node_cpu_80" {
 - GitHub 이슈를 만들어서 copilot에게 시키는 건 생각보다 효율이 안나온다. 찐빠가 약간 나기도 하고 결국 내가 직접 잘 돌아가는지 체크해야 한다. 풀리퀘 왔다갔다 하는 것도 귀찮다. 그런데 이슈를 만드는 방식은 좋다. 왜냐하면 어떤 작업의 정의가 남기 때문이다. 단순히 codex에게 일을 시킨다면 그 프롬프트는 남지가 않는데, 이슈를 prompt로서 사용한다면 그 기록이 남으니 여러모로 유용하다. 하여튼 copilot이 풀리퀘를 만드는 방식은 어차피 직접 확인해야 해서 불편하고, 하지만 이슈는 기록이 남는다는 이점이 있기 때문에, 일단 **이슈를 만든 다음 codex-cli에 GitHub MCP 기능을 붙여서 해당 이슈를 해결해달라는 방식**으로 진행하니까 좀 좋다. 커밋에 이슈 번호를 언급을 하면 Fixes 로 뜨면서 해당 커밋을 메인에 올리면 자동으로 이슈가 close 되니까 이슈 관리도 편하다. 이거 회사 업무에도 활용한다고 하면, 아사나 MCP를 codex-cli에 붙여서 하는 것도 좋은 아이디어일 것 같다.
 
 
-<ArticleImage src="/content/til/2026-01-04-1.png" alt="" />
+<ArticleImage img={tilImg1} alt="" />
 
 - 영어 단어장 단어 개수가 150개를 넘었다. 영단어 공부에 집중이 좀 잘 되는 것 같기도 하다. 시간만 잘 가고 효율이 안나는 것일 수도 있다. 방심하지 말자. 
 - english-punch 삭제하면 바로 hard delete 가 되어 버려서 좀 무섭다. 이거 빠르게 수정해야겠다.
@@ -686,7 +689,7 @@ Total Number of Droplets involved:- 32
 이제는 아래 이미지처럼 정상이다.
 
 
-<ArticleImage src="/content/til/2026-01-01-1.png" alt="" />
+<ArticleImage img={tilImg2} alt="" />
 
 원인은 [React2Shell](https://vercel.com/kb/bulletin/react2shell) 취약점 때문인 것 같다. 유출될 만한 키가 없는데 (DOKS로 배포하고 있고 거기에서 쓰는 키는 생성한 적도 없고 써본 적도 없다) Droplet이 개떡처럼 동작한다니. 누가 원격 코드를 어떻게 잘 우회해서 실행한 걸로밖에 보이지 않는다. Sentry에서 뭔가 [의심스러운 POST](https://build-talk-co-ltd.sentry.io/issues/7157194655/) 요청이 오긴 했는데 그게 이건지는 확인하지 않았다.
 

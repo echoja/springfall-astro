@@ -9,7 +9,9 @@ locale: "ko"
 ---
 
 import ArticleImage from "@modules/article/ArticleImage.astro";
-
+import img0 from "./assets/i1.jpeg";
+import img1 from "./assets/i2.png";
+import img2 from "./assets/i3.jpeg";
 
 ## 개요
 
@@ -269,7 +271,7 @@ A: 일을 마쳤습니다!
 `setTimeout` 함수가 즉시 종료되는 이유는 작업을 예약하는 일이 전부이기 때문입니다. 예약하는 것 자체는 단숨에 끝납니다. 그렇다면 작업을 도대체 어디에 저장해놓고 있을까요? 그것에 관한 자세한 설명은 [이벤트 루프](https://medium.com/sjk5766/javascript-%EB%B9%84%EB%8F%99%EA%B8%B0-%ED%95%B5%EC%8B%AC-event-loop-%EC%A0%95%EB%A6%AC-422eb29231a8) 를 설명하는 글에서 더 자세히 알아보실 수 있을 겁니다. 우리는 구체적인 작동 원리보다는 대략 어떻게 진행하겠구나를 먼저 감을 익히자구요.
 
 <ArticleImage
-  src="/content/2022-11/easy-promise-async-await/i1.jpeg"
+  img={img0}
   caption="시간의 흐름에 따른 순서"
   alt="시간의 흐름에 따른 순서"
 />
@@ -621,7 +623,7 @@ function startAsync(age) {
 지금까지의 설명을 (이해하기 쉬운 형태로 왜곡하여) 그림으로 표현하자면 아래와 같습니다.
 
 <ArticleImage
-  src="/content/2022-11/easy-promise-async-await/i2.png"
+  img={img1}
   caption="Promise를 표현한 그림"
   alt="Promise를 표현한 그림"
 />
@@ -865,7 +867,7 @@ Error: 15 is not over 20
 **비동기 작업으로부터 파생된 모든 작업은 비동기 작업으로 간주할 수 있습니다**. 어느 항구 마을에서 커다란 고기잡이 배를 바다로 떠나보낸다고 가정합시다. 커다란 고기잡이 배는 비동기 작업의 시작입니다. 동이 틀 무렵 고기잡이 배는 떠났고, 그 고기잡이 배는 나름 열심히 일할 겁니다. 고기잡이 배에서 다른 소형 배를 다시 내보내든 그물을 준비하는 작업을 하든 큰 배를 떠나보낸 항구 입장에서는 신경쓸 일이 없습니다. 배 안에서 일어나는 게 비동기 작업이든 동기 작업이든, 항구 입장에서는 모두 비동기 작업입니다.
 
 <ArticleImage
-  src="/content/2022-11/easy-promise-async-await/i3.jpeg"
+  img={img2}
   caption="떠나보낸 비동기 작업"
   alt="떠나보낸 비동기 작업"
 />

@@ -9,13 +9,18 @@ locale: "ko"
 ---
 
 import ArticleImage from "@modules/article/ArticleImage.astro";
-
+import img0 from "./assets/show.gif";
+import img1 from "./assets/example.png";
+import img2 from "./assets/i1.png";
+import img3 from "./assets/i2.png";
+import img4 from "./assets/i3.png";
+import img5 from "./assets/i4.png";
+import img6 from "./assets/i5.png";
 
 import { ExpandableText } from "./ExpandableText";
 
-
 <ArticleImage
-  src="/content/2025-02/react-expandable-text/show.gif"
+  img={img0}
   alt="더보기/접기 하는 UI"
   caption="더보기/접기 하는 UI"
 />
@@ -38,7 +43,7 @@ import { ExpandableText } from "./ExpandableText";
 그리고 디자인 상 세부적인 요구사항이 또 있었는데요, 바로 "더보기" 버튼은 외부에 있는 게 아니라 콘텐츠와 **함께** 자연스럽게 있어야 했습니다. 버튼을 외부로 둔다면 구현이 훨씬 간단해질 수 있을텐데요...
 
 <ArticleImage
-  src="/content/2025-02/react-expandable-text/example.png"
+  img={img1}
   alt="더보기/접기 구현 예시(이미지)"
   caption="더보기/접기 구현 예제(이미지)"
   border
@@ -137,7 +142,7 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
 이제 아래와 같이 보입니다.
 
 <ArticleImage
-  src="/content/2025-02/react-expandable-text/i1.png"
+  img={img2}
   alt="줄 수 만큼만 보이는 텍스트 콘텐츠"
   caption="줄 수 만큼만 보이는 텍스트 콘텐츠"
   border
@@ -205,14 +210,14 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
 - `expanding=false`일 때에만 `maxHeight`가 적용되도록 했습니다.
 
 <ArticleImage
-  src="/content/2025-02/react-expandable-text/i2.png"
+  img={img3}
   alt="ExpandableText - expanding:false 상태"
   caption="ExpandableText - expanding:false 상태"
   border
 />
 
 <ArticleImage
-  src="/content/2025-02/react-expandable-text/i3.png"
+  img={img4}
   alt="ExpandableText - expanding:true 상태"
   caption="ExpandableText - expanding:true 상태"
   border
@@ -225,7 +230,7 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
 지금까지 구현의 문제점은 높이가 낮더라도 아래와 같이 무조건 더보기/접기 버튼이 보인다는 겁니다.
 
 <ArticleImage
-  src="/content/2025-02/react-expandable-text/i4.png"
+  img={img5}
   alt="콘텐츠가 한 줄임에도 불구하고 더보기 버튼이 보이고 있음"
   caption="콘텐츠가 한 줄임에도 불구하고 더보기 버튼이 보이고 있음"
   border
@@ -303,7 +308,7 @@ export const ExpandableText: React.FC<ExpandableTextProps> = ({
 이제 의도대로 잘 동작함을 볼 수 있습니다.
 
 <ArticleImage
-  src="/content/2025-02/react-expandable-text/i5.png"
+  img={img6}
   alt="긴 글(위)일 때만 더보기 버튼이 보이고 짧은 글(아래)은 더보기 버튼이 안보인다!"
   caption="긴 글(위)일 때만 더보기 버튼이 보이고 짧은 글(아래)은 더보기 버튼이 안보인다!"
   border

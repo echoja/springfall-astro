@@ -9,13 +9,14 @@ locale: "ko"
 ---
 
 import ArticleImage from "@modules/article/ArticleImage.astro";
-
+import img0 from "./assets/i1.png";
+import img1 from "./assets/time.png";
+import img2 from "./assets/idea.png";
 
 import UI from "./ui";
 
-
 <ArticleImage
-  src="/content/2023-10/glassmorphism/i1.png"
+  img={img0}
   alt="글래스모피즘"
 >
   글래스모피즘. from <a href="https://dribbble.com/shots/14775981-Glassmorphism-After-Effects-Free"> Nguyen Tuyen </a>
@@ -35,8 +36,8 @@ import UI from "./ui";
 이 트렌드에 관심이 생긴 계기가 있는데요, macOS Sonoma 로 업데이트하면서 매우 예쁜 잠금화면으로 바뀌었기 때문이었습니다! 아래 이미지처럼요. 이걸 모방해보려구요.
 
 <ArticleImage
-  src="/content/2023-10/glassmorphism/time.png"
-  width={500}
+  img={img1}
+
   alt="글래스모피즘"
   caption="macOS Sonoma 잠금화면"
 />
@@ -46,8 +47,8 @@ import UI from "./ui";
 일단 여기 아이디어가 있습니다. https://cristiandavideconte.github.io/applyBackdropFilterBlurToText/
 
 <ArticleImage
-  src="/content/2023-10/glassmorphism/idea.png"
-  width={500}
+  img={img2}
+
   alt="글래스모피즘"
   caption="뭔가 예쁘게 텍스트 글래스모피즘이 먹혔다."
 />

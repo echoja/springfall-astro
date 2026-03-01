@@ -9,7 +9,11 @@ locale: "ko"
 ---
 
 import ArticleImage from "@modules/article/ArticleImage.astro";
-
+import img0 from "./assets/1.png";
+import img1 from "./assets/2.png";
+import img2 from "./assets/3.png";
+import img3 from "./assets/4.png";
+import img4 from "./assets/5.png";
 
 ## 목차
 
@@ -241,7 +245,7 @@ export async function getAllItems<T, R extends { sinceId: number }>(
 
 쨘~ 아래처럼 에러가 납니다.
 
-<ArticleImage src="/content/2024-12/functional/1.png" alt="R에 대한 에러 메시지" border />
+<ArticleImage img={img0} alt="R에 대한 에러 메시지" border />
 
 `R` 타입은 `sinceId` 뿐만 아니라 `name`, `age` 등 다양한 필드가 들어갈 수도 있습니다. 즉 가능성이 무궁무진한 아이입니다. 그런데 거기에 `sinceId`만 있는 좁은 타입을 넣게되면 나머지 인자가 공중 분해되기 때문에 함수의 인자로 사용할 수 없습니다. 우리는 어떠한 인자가 들어와도 그대로 넘겨주면서(forwarding) `sinceId`만 끼워 넣어줘야 합니다.
 
@@ -456,11 +460,11 @@ export function pipe(
 
 자, 이제 결과의 타입이 `WithDuration<…>`로 아주 잘 잡히는 걸 확인할 수 있습니다.
 
-<ArticleImage src="/content/2024-12/functional/2.png" alt="pipe 에서 타입 잡기 1" border />
+<ArticleImage img={img1} alt="pipe 에서 타입 잡기 1" border />
 
 중간 단계를 만들고자 할 때에도 왠지 타입이 잘 잡힙니다.
 
-<ArticleImage src="/content/2024-12/functional/3.png" alt="pipe에서 타입 잡기 2" border />
+<ArticleImage img={img2} alt="pipe에서 타입 잡기 2" border />
 
 ## `getAllItemsFn` 마지막으로 수정하기 (함수 조합의 최종 진화 형태)
 
@@ -629,11 +633,11 @@ export function getAllItemsFn<T, R>(
 
 `getAllItemsFn` 의 입출력 함수에 모두 `& { log?: Log }` 를 붙여줍니다. 이렇게 하면 인자에서 log 함수를 가져올 수 있으며 그걸로 출력을 꼼꼼히 해줍니다. `logFn`을 이용해 `log`를 주입한다면 이제 `log`를 넣으라는 요구를 하지 않게 됩니다. 아래 이미지와 같이 빈 객체를 인자로 넘겨도 에러가 발생하지 않습니다. (요구하는 인자가 없다면 아예 `arg`를 넣지 않아도 되는 방식이 더 좋아보이지만, 그렇게 구현할 간단한 방법이 보이지 않아서 포기했습니다ㅠㅠ 좋은 방법이 있다면 댓글로 공유해주세요-!)
 
-<ArticleImage src="/content/2024-12/functional/4.png" alt="인자의 요구조건을 없애는 예시" border />
+<ArticleImage img={img3} alt="인자의 요구조건을 없애는 예시" border />
 
 만약 `getAllProducts`의 함수 구성을 변경하지 않았다면, 이 함수는 아래와 같이 `log` 함수를 넣으라는 요구를 하게 됩니다. optional이긴 하지만요. 놀라운 점은 아래 코드는 전혀 수정되지 않았는데도 `pipe`는 알아서 `log`를 인자로 넣을 수 있다고 타입 추론을 해버린다는 겁니다.
 
-<ArticleImage src="/content/2024-12/functional/5.png" alt="인자의 요구조건을 굳이 없애지 않는 예시" border />
+<ArticleImage img={img4} alt="인자의 요구조건을 굳이 없애지 않는 예시" border />
 
 로그는 각 태스크를 구분지을 수 있도록 출력하는 게 더 유용합니다. 그래서 `key`를 미리 지정하기 보다는 후자처럼 필요할 때마다 `createLog`를 하면 될 것 같습니다.
 

@@ -9,10 +9,11 @@ locale: "ko"
 ---
 
 import ArticleImage from "@modules/article/ArticleImage.astro";
-
+import img0 from "./assets/time.avif";
+import img1 from "./assets/tsup_package.json.png";
 
 <ArticleImage
-  src="/content/2024-02/tsup/time.avif"
+  img={img0}
   alt="시간"
 >
   시간. Photo by <a href="https://unsplash.com/@aronvisuals?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"> Aron Visuals </a> on <a href="https://unsplash.com/photos/selective-focus-photo-of-brown-and-blue-hourglass-on-stones-BXOXnQ26B7o?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"> Unsplash </a>
@@ -29,7 +30,7 @@ tsup 어떻게 읽어야 하죠? 티썹? 하여튼 이걸 처음 알게 된 계�
 아래는 [그 예시의 `package.json` 파일](https://github.com/vercel/turbo/blob/main/examples/kitchen-sink/apps/api/package.json)입니다.
 
 <ArticleImage
-  src="/content/2024-02/tsup/tsup_package.json.png"
+  img={img1}
   alt="Turborepo의 Example에 있었던 어떤 간단한 서버의 package.json 파일입니다."
   caption="Turborepo의 Example에 있었던 어떤 간단한 서버의 package.json 파일입니다."
 />

@@ -9,7 +9,8 @@ locale: "ko"
 ---
 
 import ArticleImage from "@modules/article/ArticleImage.astro";
-
+import img0 from "./assets/i1.png";
+import img1 from "./assets/i2.png";
 
 타입스크립트 기반 프로젝트를 만들 때 거의 세트로 따라다니는 놈들이 있습니다. 최근인지 아닌지는 잘 모르겠습니다. 아, 타입스크립트 또한 부가적인 녀석일 수도 있죠. 가볍게 살펴볼까요
 
@@ -20,7 +21,7 @@ npx create-next-app@latest
 ```
 
 <ArticleImage
-  src="/content/2023-07/why-eslint/i1.png"
+  img={img0}
   alt="npx create-next-app@latest 실행화면"
   caption="npx create-next-app@latest 실행화면"
 />
@@ -28,10 +29,10 @@ npx create-next-app@latest
 엔터를 열심히 누르면 됩니다. 그럼 아래와 같은 파일이 나옴을 확인할 수 있을 겁니다. 주요한 것만 살펴봅시다.
 
 <ArticleImage
-  src="/content/2023-07/why-eslint/i2.png"
+  img={img1}
   alt="Next.js 프로젝트 파일 구성"
   caption="Next.js 프로젝트 파일 구성"
-  width={200}
+
 />
 
 - `package.json` : Node.js 기반 프로젝트에서 구심점이 되는 파일입니다. 이 파일이 있는 폴더가 곧 프로젝트의 루트 경로를 의미합니다. 프로젝트 이름이나 의존성 패키지 등이 설정되어 있습니다.

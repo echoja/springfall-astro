@@ -9,10 +9,12 @@ locale: "ko"
 ---
 
 import ArticleImage from "@modules/article/ArticleImage.astro";
-
+import img0 from "./assets/time.avif";
+import img1 from "./assets/jangsong.webp";
+import img2 from "./assets/abouttime.webp";
 
 <ArticleImage
-  src="/content/2024-01/time/time.avif"
+  img={img0}
   alt="시간"
 >
   시간. Photo by <a href="https://unsplash.com/@aronvisuals?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"> Aron Visuals </a> on <a href="https://unsplash.com/photos/selective-focus-photo-of-brown-and-blue-hourglass-on-stones-BXOXnQ26B7o?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"> Unsplash </a>
@@ -74,14 +76,14 @@ import ArticleImage from "@modules/article/ArticleImage.astro";
 
 <div className="flex flex-col gap-2 xs:flex-row">
   <ArticleImage
-    src="/content/2024-01/time/jangsong.webp"
-    width={800}
+    img={img1}
+
     alt="장송의 프리렌 1권 표지"
     caption="장송의 프리렌 1권 표지"
   />
   <ArticleImage
-    src="/content/2024-01/time/abouttime.webp"
-    width={800}
+    img={img2}
+
     alt="어바웃타임 한글 포스터"
     caption="어바웃타임 한글 포스터"
   />

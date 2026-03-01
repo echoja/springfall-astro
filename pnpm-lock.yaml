@@ -65,6 +65,9 @@ importers:
       remark-toc:
         specifier: ^9.0.0
         version: 9.0.0
+      sharp:
+        specifier: ^0.34.5
+        version: 0.34.5
       tailwind-merge:
         specifier: ^3.5.0
         version: 3.5.0
@@ -3452,8 +3455,7 @@ snapshots:
       hast-util-heading-rank: 2.1.1
       rehype: 12.0.1
 
-  '@img/colour@1.0.0':
-    optional: true
+  '@img/colour@1.0.0': {}
 
   '@img/sharp-darwin-arm64@0.33.5':
     optionalDependencies:
@@ -5732,7 +5734,6 @@ snapshots:
       '@img/sharp-win32-arm64': 0.34.5
       '@img/sharp-win32-ia32': 0.34.5
       '@img/sharp-win32-x64': 0.34.5
-    optional: true
 
   shiki@3.23.0:
     dependencies:

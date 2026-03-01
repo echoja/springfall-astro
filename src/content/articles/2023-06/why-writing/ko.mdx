@@ -8,10 +8,15 @@ locale: "ko"
 ---
 
 import ArticleImage from "@modules/article/ArticleImage.astro";
+import img0 from "./assets/i1.jpg";
+import img1 from "./assets/i2.png";
+import img2 from "./assets/ik.png";
+import img3 from "./assets/ie.jpg";
+import img4 from "./assets/ip.jpg";
+import img5 from "./assets/i3.jpeg";
 import ExampleComponent from "./example-component";
 
-
-<ArticleImage alt="종이 위에서 무언가를 쓰고 있는 펜의 모습" src="/content/2023-06/why-writing/i1.jpg" />
+<ArticleImage alt="종이 위에서 무언가를 쓰고 있는 펜의 모습" img={img0} />
 
 ## 글을 열며
 
@@ -20,7 +25,7 @@ import ExampleComponent from "./example-component";
 <ArticleImage
   alt="필자를 응원해주는 댓글"
   caption="필자를 응원해주는 댓글"
-  src="/content/2023-06/why-writing/i2.png"
+  img={img1}
 />
 
 댓글은 항상 뿌듯합니다. 다만 좀 특이합니다. 글 자체가 도움이 될 수도 있지만, 글이 `재밌다`라든지 `빠져든다` 라는 평가는 좀 신선합니다. 아무래도 글을 제멋대로 쓰는 제 취향과 맞아떨어져버린 게 아닌가 싶었습니다. 한참 옛날에, `참을 수 없는 존재의 가벼움`을 처음 읽었을 때 다소 충격을 받았는데, 그 느낌과 비슷하지 않을까요. 그때 밀란 쿤데라라는 사람도 궁금해져서, 더욱 찾아보고 그랬어요.
@@ -42,7 +47,7 @@ J: 블로그 하지 않고, 앞으로도 할 생각 없다. 글을 잘 쓰지도
 <ArticleImage
   alt="개꽐라"
   caption="그날 좀 술을 많이 마셔서 힘들었다..."
-  src="/content/2023-06/why-writing/ik.png"
+  img={img2}
 />
 
 동료들은 **필요성**에 의해 블로그를 해야 할지, 할 필요가 없을지를 논했습니다. 저는 지금까지 커리어 때문에 블로그를 해왔다고 생각하고 있었는데, 커리어에 대해 진지하게 논의하는 동료들을 보니, 나는 커리어에 대해 그렇게까지는 숙고하고 있지 않았구나 하는 깨달음이 왔습니다.
@@ -61,7 +66,7 @@ J: 블로그 하지 않고, 앞으로도 할 생각 없다. 글을 잘 쓰지도
 
 <ArticleImage
   alt="끝없는 길"
-  src="/content/2023-06/why-writing/ie.jpg"
+  img={img3}
 >
   왔던 길을 돌아보면 어떻게 왔는지 정말 모를 때가 많다. from <a href="https://unsplash.com/ko/%EC%82%AC%EC%A7%84/cYW4ROUmzzQ?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> by <a href="https://unsplash.com/pt-br/@paultrienekens?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Paul Trienekens</a>
 </ArticleImage>
@@ -90,7 +95,7 @@ J: 블로그 하지 않고, 앞으로도 할 생각 없다. 글을 잘 쓰지도
 
 <ArticleImage
   alt="극한의 효율충"
-  src="/content/2023-06/why-writing/ip.jpg"
+  img={img4}
 >
   from <a href="https://unsplash.com/ko/%EC%82%AC%EC%A7%84/hbqSiUNngMg?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> by <a href="https://unsplash.com/@unicorneatingpopcorn?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Anna Evlanova</a>
 </ArticleImage>
@@ -208,7 +213,7 @@ J: 블로그 하지 않고, 앞으로도 할 생각 없다. 글을 잘 쓰지도
 <ArticleImage
   alt="중요한 건 꺾였는데도 그냥 하는 마음"
   caption="중요한 건 꺾였는데도 그냥 하는 마음"
-  src="/content/2023-06/why-writing/i3.jpeg"
+  img={img5}
 />
 
 글이란 건 힘이 넘치기도 하고, 비실비실하기도 합니다. 뉴스 한 꼭지로 심오하고 장엄한 컬럼을 쓰시는 분들도 있고, 멋진 소설과 인문학 책을 쓰시는 분들도 있고, 저처럼 인터넷 구석탱이에서 끄적이는 사람들도 있습니다. 그런 것과 아무런 관계없이 저는 글 쓰는 걸 즐깁니다.

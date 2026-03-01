@@ -41,6 +41,11 @@ export default defineConfig({
   site: "https://springfall.cc",
   output: "static",
 
+  image: {
+    layout: "constrained",
+    responsiveStyles: true,
+  },
+
   integrations: [
     react(),
     mdx({

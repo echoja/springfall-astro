@@ -9,9 +9,10 @@ locale: "ko"
 ---
 
 import ArticleImage from "@modules/article/ArticleImage.astro";
+import img0 from "./assets/inject.png";
+import img1 from "./assets/p2.png";
 
-
-<ArticleImage src="/content/2025-07/nextjs-inject-env/inject.png" border alt="">
+<ArticleImage img={img0} border alt="">
   일러스트 by ChatGPT
 </ArticleImage>
 
@@ -203,7 +204,7 @@ Environment file created at: /Users/th.kim/Desktop/inject-env-nextjs-pages-route
 실제 동작을 확인해볼까요?
 
 <ArticleImage
-  src="/content/2025-07/nextjs-inject-env/p2.png"
+  img={img1}
   border
   alt="">
   브라우저에서 <code>API_ENDPOINT</code> 환경변수를 잘 가져다 쓰고 있는 모습

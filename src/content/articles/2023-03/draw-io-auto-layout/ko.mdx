@@ -9,7 +9,11 @@ locale: "ko"
 ---
 
 import ArticleImage from "@modules/article/ArticleImage.astro";
-
+import img0 from "./assets/i1.png";
+import img1 from "./assets/i2.png";
+import img2 from "./assets/i3.png";
+import img3 from "./assets/i4.png";
+import img4 from "./assets/i5.png";
 
 [draw.io(diagrams.net)](https://app.diagrams.net/) 는 아주 편안하고 강력하고 검증된 다이어그램 그리기 도구입니다. 각종 순서도를 그리기 편해서 많이 애용합니다. 하지만, 쓰기 불편한 점이 하나 있다면, 구조가 조금만 복잡해지더라도 화살표를 어떻게 배치할지 요소들을 어떻게 배치할지 고민이 된다는 것입니다.
 
@@ -18,7 +22,7 @@ import ArticleImage from "@modules/article/ArticleImage.astro";
 일단 다이어그램을 만들어봅시다. 그런데 일단 화살표를 만들 때 유의해야 할 점이 있습니다. "변"에서 "변"을 연결하는 게 아니라 요소끼리 연결해야 한다는 점입니다. 나중에 레이아웃을 자동으로 변경하면서 요소들이 움직일텐데, 화살표가 변에 붙어있으면 화살표가 어색하게 위치하게 됩니다.
 
 <ArticleImage
-  src="/content/2023-03/draw-io-auto-layout/i1.png"
+  img={img0}
   alt="화살표 연결 시작"
 >
   화살표를 연결할 때에 꼭짓점이 아니라 저 <strong>파란색 화살표</strong>를 활용해야 합니다.
@@ -27,7 +31,7 @@ import ArticleImage from "@modules/article/ArticleImage.astro";
 연결을 마무리 지을 때에도 아래 이미지와 같이 하세요.
 
 <ArticleImage
-  src="/content/2023-03/draw-io-auto-layout/i2.png"
+  img={img1}
   alt="화살표 연결 끝"
 >
   화살표가 도착할 때에도 X 점이 아니라 <strong>하늘색 테두리</strong>가 나오게끔 연결합니다.
@@ -35,12 +39,12 @@ import ArticleImage from "@modules/article/ArticleImage.astro";
 
 그렇다면, 아래와 같이 못생긴 다이어그램이 나올 겁니다.
 
-<ArticleImage src="/content/2023-03/draw-io-auto-layout/i3.png" alt="못생긴 다이어그램" caption="못생긴 다이어그램" />
+<ArticleImage img={img2} alt="못생긴 다이어그램" caption="못생긴 다이어그램" />
 
 알아보기가 불가능합니다. 이걸 멋지게 바꿔봅시다. `배치 - 레이아웃 - 수직 흐름도`를 선택합니다.
 
 <ArticleImage
-  src="/content/2023-03/draw-io-auto-layout/i4.png"
+  img={img3}
   alt="배치 레이아웃 수직흐름도를 선택합니다."
   caption="배치 - 레이아웃 - 수직흐름도를 선택합니다."
 />
@@ -48,7 +52,7 @@ import ArticleImage from "@modules/article/ArticleImage.astro";
 그럼 짜잔! 아주 예쁜 그래프가 나옵니다.
 
 <ArticleImage
-  src="/content/2023-03/draw-io-auto-layout/i5.png"
+  img={img4}
   alt="한눈에 알아보기 쉬운 다이어그램"
   caption="한눈에 알아보기 쉬운 다이어그램"
 />
