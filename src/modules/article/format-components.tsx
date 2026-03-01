@@ -141,13 +141,21 @@ export function Anchor({
   ...restProps
 }: React.ComponentProps<"a">) {
   const isInternal = href?.startsWith("/article") || href?.startsWith("#");
-  const isHeadingAnchor = (restProps.className || "")
-    .split(" ")
-    .includes("heading-anchor");
+
+  // Detect heading anchor from rehype-autolink-headings props
+  // Props may be passed as various types (string/number/boolean) depending on framework
+  const isHeadingAnchor =
+    String(restProps.tabIndex) === "-1" ||
+    String((restProps as any).tabindex) === "-1";
 
   if (isHeadingAnchor) {
     return (
-      <a {...restProps} href={href || ""}>
+      <a
+        aria-hidden="true"
+        tabIndex={-1}
+        className="heading-anchor"
+        href={href || ""}
+      >
         {children}
       </a>
     );

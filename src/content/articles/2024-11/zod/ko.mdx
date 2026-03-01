@@ -15,19 +15,9 @@ import ArticleImage from "@modules/article/ArticleImage.astro";
   src="/content/2024-11/zod/u.jpg"
   width={700}
   alt="검증하는 사진"
-  caption={
-    <>
-      Photo:{" "}
-      <a href="https://unsplash.com/ko/%EC%82%AC%EC%A7%84/person-holding-paper-near-pen-and-calculator-xoU52jUVUXA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
-        Unsplash
-      </a>{" "}
-      from{" "}
-      <a href="https://unsplash.com/ko/@kellysikkema?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
-        Kelly Sikkema
-      </a>
-    </>
-  }
-/>
+>
+  Photo: <a href="https://unsplash.com/ko/%EC%82%AC%EC%A7%84/person-holding-paper-near-pen-and-calculator-xoU52jUVUXA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"> Unsplash </a> from <a href="https://unsplash.com/ko/@kellysikkema?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash"> Kelly Sikkema </a>
+</ArticleImage>
 
 ## Validation이 필요한 이유와 Zod의 포지셔닝
 
@@ -70,13 +60,9 @@ function request(callback) {
   src="/content/2024-11/zod/t3.png"
   width={683}
   border
-  caption={
-    <>
-      <code>json</code> 함수의 리턴 타입은 <code>Promise&lt;any&gt;</code>{" "}
-      입니다.
-    </>
-  }
-/>
+>
+  <code>json</code> 함수의 리턴 타입은 <code>Promise&lt;any&gt;</code> 입니다.
+</ArticleImage>
 
 브라우저와 서버가 하나로 통합되어 있다면 이야기가 조금은 달라질 수 있습니다. [Next.js](https://nextjs.org/)라는 프레임워크는 브라우저에서 돌아가는 React 뿐만 아니라 서버 역할까지 수행할 수 있습니다. 그래서 컴포넌트에서 [Server Actions](https://react.dev/reference/rsc/server-actions) 와 같은 것을 사용하면서 실제로는 네트워크 요청이 이루어진다 해도 타입이 무사히 보존될 수 있도록 하죠. 물론 네트워크라는 본질적인 한계 때문에 전달되는 값들은 [제약사항](https://react.dev/reference/rsc/use-server#serializable-parameters-and-return-values)이 따르지만, 이정도만 해도 어딥니까. [tRPC](https://trpc.io/)라는 프레임워크도 통합 환경을 비슷한 원리로 제공합니다.
 

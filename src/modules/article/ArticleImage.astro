@@ -3,15 +3,18 @@ import { twMerge } from "tailwind-merge";
 import style from "./style.module.css";
 
 interface Props {
-  src: string;
-  caption?: any;
+  src?: string;
+  img?: ImageMetadata;
+  caption?: string;
   alt: string;
   width?: number;
   noShadow?: boolean;
   border?: boolean;
 }
 
-const { src, caption, alt, width, noShadow, border } = Astro.props;
+const { src, img, caption, alt, width, noShadow, border } = Astro.props;
+const imgSrc = img?.src ?? src;
+const hasSlot = Astro.slots.has("default");
 ---
 
 <figure class={style["image-figure"]}>
@@ -22,11 +25,13 @@ const { src, caption, alt, width, noShadow, border } = Astro.props;
       border && style["image-border"],
     )}
     width={width}
-    src={src}
+    src={imgSrc}
     alt={alt}
     loading="lazy"
   />
-  {caption && (
+  {hasSlot ? (
+    <figcaption class={style["image-caption"]}><slot /></figcaption>
+  ) : caption ? (
     <figcaption class={style["image-caption"]}>{caption}</figcaption>
-  )}
+  ) : null}
 </figure>

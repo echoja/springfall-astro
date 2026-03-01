@@ -14,19 +14,9 @@ import ArticleImage from "@modules/article/ArticleImage.astro";
 <ArticleImage
   src="/content/2023-09/graphql-codegen/o.jpg"
   alt="두렁에 빠진 차를 밀고 있는 사람들"
-  caption={
-    <>
-      어떻게든 빠져나가야 한다! Photo by{" "}
-      <a href="https://unsplash.com/@octoberroses?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">
-        Aubrey Odom
-      </a>{" "}
-      on{" "}
-      <a href="https://unsplash.com/photos/T1L9Q5g7eIQ?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">
-        Unsplash
-      </a>
-    </>
-  }
-/>
+>
+  어떻게든 빠져나가야 한다! Photo by <a href="https://unsplash.com/@octoberroses?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"> Aubrey Odom </a> on <a href="https://unsplash.com/photos/T1L9Q5g7eIQ?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"> Unsplash </a>
+</ArticleImage>
 
 [GraphQL](https://graphql.org/)이란 API 기술 중 하나입니다. [API](https://aws.amazon.com/ko/what-is/api)란 하나의 프로그램에서 다른 프로그램으로 요청을 주고받을 때 사용하는 기술인데요, 보통은 클라이언트와 서버가 요청을 주고받을 때를 일컫습니다. 프로그램이 나뉘어져 있는 가장 큰 이유는 그냥 돌아가는 컴퓨터가 다르기 때문입니다. 웹앱을 생각해봅시다. 고객이 이용하는 브라우저가 있습니다. 맥북이나 윈도우 데스크톱, 태블릿, 아이폰이나 삼성 갤럭시가 될 수 있겠죠. 반면 서비스를 제공하는 쪽에서는 AWS 나 직접 구축한 서버에서 프로그램이 돌아갈 것입니다. 이 둘 사이에서는 통신이 필요하고, 그 방법을 API 레이어에서 제공해준다는 느낌입니다.
 
