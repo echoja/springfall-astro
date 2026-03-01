@@ -38,8 +38,8 @@ export const GET: APIRoute = async ({ site }) => {
       const slug = parts[1];
       const hasTranslation = !!article.data.translationKey;
       const url = hasTranslation
-        ? `${BASE}/ko/article/${yearMonth}/${slug}`
-        : `${BASE}/article/${yearMonth}/${slug}`;
+        ? `${BASE}/ko/article/${yearMonth}/${slug}/`
+        : `${BASE}/article/${yearMonth}/${slug}/`;
 
       return `    <item>
       <title>${escapeXml(article.data.title)}</title>

@@ -29,7 +29,7 @@ if (translationKey) {
     const parts = article.id.split("/");
     languageLinks = translations.map((t) => {
       const l = t.data.locale ?? "ko";
-      return { locale: l, href: `/${l}/article/${parts[0]}/${parts[1]}` };
+      return { locale: l, href: `/${l}/article/${parts[0]}/${parts[1]}/` };
     });
   }
 }

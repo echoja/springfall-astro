@@ -40,6 +40,7 @@ const customContainerOptions = {
 export default defineConfig({
   site: "https://springfall.cc",
   output: "static",
+  trailingSlash: "always",
 
   image: {
     layout: "constrained",
@@ -114,15 +115,15 @@ export default defineConfig({
   ],
 
   redirects: {
-    "/post/12": "/article/2023-03/draw-io-auto-layout",
-    "/post/11": "/article/2023-02/knou-tips",
-    "/post/10": "/article/2023-02/puss-in-boots",
-    "/post/9": "/article/2022-11/i-me-mom-mom",
-    "/post/7": "/article/2022-11/easy-promise-async-await",
-    "/post/5": "/article/2022-10/javascript-smooth-animation",
-    "/post/6": "/article/2022-11/everything",
-    "/post/3": "/article/2023-07/ts-data-structure",
-    "/post/2": "/article/2022-10/hello-sadness",
-    "/post/1": "/article/2022-09/company",
+    "/post/12": "/article/2023-03/draw-io-auto-layout/",
+    "/post/11": "/article/2023-02/knou-tips/",
+    "/post/10": "/article/2023-02/puss-in-boots/",
+    "/post/9": "/article/2022-11/i-me-mom-mom/",
+    "/post/7": "/article/2022-11/easy-promise-async-await/",
+    "/post/5": "/article/2022-10/javascript-smooth-animation/",
+    "/post/6": "/article/2022-11/everything/",
+    "/post/3": "/article/2023-07/ts-data-structure/",
+    "/post/2": "/article/2022-10/hello-sadness/",
+    "/post/1": "/article/2022-09/company/",
   },
 });

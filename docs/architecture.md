@@ -31,6 +31,13 @@
 - Without it, hooks fail silently and components render as static HTML
 - Examples: UI (glassmorphism), ContentGraph, PostPage, FoodOrderApp, ShowAllCurrency, Tester, ExpandableText
 
+## URL Conventions
+
+- `trailingSlash: "always"` is configured in `astro.config.mjs`
+- All internal page links must end with `/` (e.g., `/article/2024-02/tsup/`)
+- Asset links (`/icon.png`, `/feed.xml`, CSS) do not get trailing slashes
+- Cloudflare Pages issues 308 redirects for missing trailing slashes; this config eliminates those extra round-trips
+
 ## CSS
 
 - Pretendard font CSS loaded via `<link>` tag in BaseLayout.astro (not ES import — public dir CSS can't be imported as modules)

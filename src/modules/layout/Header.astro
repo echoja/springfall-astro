@@ -10,7 +10,7 @@ interface Props {
 const { lang } = Astro.props;
 const locale: Locale = (lang as Locale) ?? getLocaleFromPathname(Astro.url.pathname) ?? i18n.defaultLocale;
 const text = uiText[locale];
-const isPortfolioPage = Astro.url.pathname === "/portfolio";
+const isPortfolioPage = Astro.url.pathname === "/portfolio/";
 ---
 
 <header class="relative mb-24 flex w-full items-center justify-center">
