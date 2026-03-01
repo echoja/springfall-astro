@@ -79,7 +79,7 @@
 
   html {
     @apply transition-all duration-300 break-words font-[350] bg-background text-foreground;
-    text-size-adjust: auto;
+    text-size-adjust: 100%;
     word-spacing: 0.02em;
   }
 
