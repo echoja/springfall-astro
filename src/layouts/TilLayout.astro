@@ -1,0 +1,24 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Header from "@modules/layout/Header.astro";
+import Giscus from "@modules/giscus";
+
+const locale = "ko";
+---
+
+<BaseLayout
+  title="TIL"
+  description="잡탕구리일기"
+  lang={locale}
+  noIndex={true}
+>
+  <Header />
+  <main class="mt-12 mb-24">
+    <article class="article mx-auto max-w-screen-md px-6">
+      <slot />
+    </article>
+  </main>
+  <div class="mx-auto max-w-screen-md px-6">
+    <Giscus client:visible locale={locale} />
+  </div>
+</BaseLayout>

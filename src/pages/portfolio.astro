@@ -1,0 +1,73 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@modules/layout/Header.astro";
+import PortfolioContent from "@modules/portfolio/PortfolioContent";
+---
+
+<BaseLayout title="포트폴리오" description="프로젝트와 경력을 모아둔 포트폴리오 페이지">
+  <Header />
+  <main>
+    <PortfolioContent client:load />
+  </main>
+</BaseLayout>
+
+<style is:global>
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #portfolio-content,
+    #portfolio-content * {
+      visibility: visible;
+    }
+    #portfolio-content {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      font-size: 10pt;
+    }
+    .no-print {
+      display: none !important;
+    }
+    .page-break {
+      page-break-after: always;
+    }
+    @page {
+      margin: 0;
+      size: A4;
+    }
+    #portfolio-content {
+      padding: 25mm 20mm;
+      box-sizing: border-box;
+      min-height: 297mm;
+    }
+    section {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    h2 {
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+    .print-title {
+      font-size: 20pt !important;
+    }
+    .print-subtitle {
+      font-size: 11pt !important;
+    }
+    .print-heading {
+      font-size: 14pt !important;
+    }
+    .print-subheading {
+      font-size: 12pt !important;
+    }
+    .print-body {
+      font-size: 10px;
+      line-height: 1.5;
+    }
+    .print-small {
+      font-size: 10pt !important;
+    }
+  }
+</style>

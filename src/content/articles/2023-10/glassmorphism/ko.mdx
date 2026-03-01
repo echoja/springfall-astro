@@ -1,0 +1,70 @@
+---
+title: "글래스모피즘 디자인이란 무엇일까? (작성중) (feat. code generator)"
+summary: "2023년 디자인 트렌드 중 하나인 Glassmorphism에 대해 자세히 알아보지는 않고 그냥 코드 생성기를 시험삼아 작성해보는 글입니다."
+createdAt: "2023-10-15"
+updatedAt: "2023-10-15"
+imageAlt: "패턴"
+category: "디자인"
+locale: "ko"
+---
+
+import ArticleImage from "@modules/article/ArticleImage.astro";
+
+
+import UI from "./ui";
+
+
+<ArticleImage
+  src="/content/2023-10/glassmorphism/i1.png"
+  alt="글래스모피즘"
+  caption={
+    <>
+      글래스모피즘. from{" "}
+      <a href="https://dribbble.com/shots/14775981-Glassmorphism-After-Effects-Free">
+        Nguyen Tuyen
+      </a>
+    </>
+  }
+/>
+
+글래스모피즘이란 위 이미지와 같이 뭔가 반투명 효과 같은 애플스러운 시각적 디자인 양식을 뜻합니다.
+
+그나저나 아쉽게도 이 글은 이 글래스모피즘을 깊게 파기 위한 글은 아닙니다.
+
+이 글의 진짜 목적은 크게 두 가지 입니다.
+
+1. 코드 제네레이터를 블로그 글 안에 삽입해보기.
+2. [NextUI](https://nextui.org/) 시험해보기.
+
+그리고 그 소재로 글래스모피즘(Glassmorphism)이 사용되었을 뿐입니다. 수단으로써 사용되었을 뿐인 글래스모피즘에게 양해를 표합니다. 이 디자인 양식의 자세한 설명은 [What is Glassmorphism (Design Studio, 2023-09-07, 영어)](https://uxplanet.org/what-is-glassmorphism-8fe8bb6222f7) 글을 추천드립니다.
+
+이 트렌드에 관심이 생긴 계기가 있는데요, macOS Sonoma 로 업데이트하면서 매우 예쁜 잠금화면으로 바뀌었기 때문이었습니다! 아래 이미지처럼요. 이걸 모방해보려구요.
+
+<ArticleImage
+  src="/content/2023-10/glassmorphism/time.png"
+  width={500}
+  alt="글래스모피즘"
+  caption="macOS Sonoma 잠금화면"
+/>
+
+네. 기본적인 아이디어는 https://hype4.academy/tools/glassmorphism-generator 에서 따왔습니다. ... 그리고 장렬하게 실패 중입니다. 위 이미지처럼 텍스트를 backdrop-filter 하는 문제는 전혀 다른 문제였네요. !!! 개힘들어.
+
+일단 여기 아이디어가 있습니다. https://cristiandavideconte.github.io/applyBackdropFilterBlurToText/
+
+<ArticleImage
+  src="/content/2023-10/glassmorphism/idea.png"
+  width={500}
+  alt="글래스모피즘"
+  caption="뭔가 예쁘게 텍스트 글래스모피즘이 먹혔다."
+/>
+
+svg 이미지가 필요해요, svg 이미지가! 그러기 위해서 아래 라이브러리를 잘 사용하면 어떻게든 되지 않을까?
+
+- https://danmarshall.github.io/google-font-to-svg-path/
+- https://opentype.js.org/
+
+일단 아래는 무시해주세요. 작업 중입니다. 작업이 완료된다면 아마 잘 수정이 되었을 겁니다.
+
+<UI />
+
+저에게 건투를 빌어주세요.

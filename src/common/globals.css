@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --breakpoint-xs: 480px;
+
+  --font-sans:
+    "Pretendard GOV Variable", "Pretendard GOV", "Pretendard Variable",
+    "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto,
+    "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR",
+    "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    sans-serif;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+
+  --color-brand-50: #ecfdf5;
+  --color-brand-100: #d1fae5;
+  --color-brand-200: #a7f3d0;
+  --color-brand-300: #6ee7b7;
+  --color-brand-400: #34d399;
+  --color-brand-500: #10b981;
+  --color-brand-600: #059669;
+  --color-brand-700: #047857;
+  --color-brand-800: #065f46;
+  --color-brand-900: #064e3b;
+  --color-brand-950: #022c22;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-stroke: var(--stroke);
+  --color-background-muted: var(--background-muted);
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--stroke);
+  }
+}
+
+:root {
+  --background: var(--color-white);
+  --background-muted: var(--color-gray-100);
+  --foreground: var(--color-gray-800);
+  --foreground-muted: var(--color-gray-500);
+  --stroke: var(--color-gray-200);
+}
+
+.dark {
+  --background: var(--color-gray-900);
+  --background-muted: var(--color-gray-800);
+  --foreground: var(--color-gray-300);
+  --foreground-muted: var(--color-gray-400);
+  --stroke: var(--color-gray-700);
+}
+
+
+@utility max-content {
+  width: max-content;
+}
+
+@utility text-0 {
+  font-size: 0;
+}
+
+@utility article-heading {
+  @apply font-semibold mt-[1.5em] mb-[0.5em] relative;
+}
+
+@layer base {
+
+  html {
+    @apply transition-all duration-300 break-words font-[350] bg-background text-foreground;
+    text-size-adjust: auto;
+    word-spacing: 0.02em;
+  }
+
+  body {
+    @apply font-sans;
+  }
+
+  input {
+    @apply border-stroke;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-sans;
+  }
+
+  a {
+    @apply text-gray-600 hover:text-gray-800 hover:underline;
+  }
+
+  .dark a {
+    @apply text-gray-100 hover:text-gray-200 hover:underline;
+  }
+
+  kbd {
+    @apply transition-all;
+  }
+
+  article {
+    @apply leading-[1.65];
+  }
+
+  article p {
+    @apply my-[1.2em];
+  }
+
+  article kbd {
+    @apply border text-gray-500 text-xs font-bold border-gray-300 bg-gray-100 rounded-sm py-0.5 px-1 leading-tight whitespace-nowrap;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1),
+      0 2px 1px 0 rgba(255, 255, 255, 0.5) inset;
+  }
+
+  .dark article kbd {
+    @apply text-gray-200 bg-gray-600 border-gray-500;
+    box-shadow: 0px 1px 2px rgba(255, 255, 255, 0.5),
+      0 1px 1px 0 rgba(255, 255, 255, 0.3) inset;
+  }
+}
+
+/** code-hike */
+.ch-scrollycoding-step-content {
+  @apply border-gray-200;
+}
+
+article .heading-anchor {
+  @apply absolute w-6 h-6 p-1 text-gray-300 -left-6 sm:-left-7 top-1;
+}
+
+.dark article .heading-anchor {
+  @apply text-gray-700;
+}
+
+h2:has(.heading-anchor),
+h3:has(.heading-anchor),
+h4:has(.heading-anchor),
+h5:has(.heading-anchor),
+h6:has(.heading-anchor) {
+  @apply relative ml-2 sm:ml-0;
+}
+
+article .heading-anchor:hover {
+  @apply text-inherit;
+}
+
+article .heading-anchor svg {
+  @apply w-4 h-4;
+}

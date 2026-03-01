@@ -1,0 +1,32 @@
+---
+import { twMerge } from "tailwind-merge";
+import style from "./style.module.css";
+
+interface Props {
+  src: string;
+  caption?: any;
+  alt: string;
+  width?: number;
+  noShadow?: boolean;
+  border?: boolean;
+}
+
+const { src, caption, alt, width, noShadow, border } = Astro.props;
+---
+
+<figure class={style["image-figure"]}>
+  <img
+    class={twMerge(
+      style.image,
+      noShadow && style["no-shadow"],
+      border && style["image-border"],
+    )}
+    width={width}
+    src={src}
+    alt={alt}
+    loading="lazy"
+  />
+  {caption && (
+    <figcaption class={style["image-caption"]}>{caption}</figcaption>
+  )}
+</figure>

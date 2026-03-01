@@ -1,0 +1,62 @@
+---
+import { getCollection, render } from "astro:content";
+import ArticleLayout from "@/layouts/ArticleLayout.astro";
+import { mdxComponents } from "@modules/article/mdx-components";
+
+export async function getStaticPaths() {
+  const articles = await getCollection("articles");
+
+  return articles
+    .filter((a) => a.data.locale === "en")
+    .map((article) => {
+      const parts = article.id.split("/");
+      return {
+        params: { yearMonth: parts[0], slug: parts[1] },
+        props: { article },
+      };
+    });
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const { title, summary, createdAt, updatedAt, category, translationKey } = article.data;
+
+let languageLinks: Array<{ locale: string; href: string }> = [];
+if (translationKey) {
+  const allArticles = await getCollection("articles");
+  const translations = allArticles.filter((a) => a.data.translationKey === translationKey);
+  if (translations.length >= 2) {
+    const parts = article.id.split("/");
+    languageLinks = translations.map((t) => {
+      const l = t.data.locale ?? "ko";
+      return { locale: l, href: `/${l}/article/${parts[0]}/${parts[1]}` };
+    });
+  }
+}
+
+const site = Astro.site?.toString().replace(/\/$/, "") ?? "";
+const canonicalUrl = `${site}${Astro.url.pathname}`;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: title,
+  description: summary,
+  datePublished: createdAt,
+  dateModified: updatedAt || createdAt,
+  author: { "@type": "Person", name: "김태훈", url: "https://github.com/echoja" },
+  url: canonicalUrl,
+};
+---
+
+<ArticleLayout
+  title={title}
+  description={summary}
+  createdAt={createdAt}
+  category={category}
+  locale="en"
+  jsonLd={jsonLd}
+  canonicalUrl={canonicalUrl}
+  languageLinks={languageLinks}
+>
+  <Content components={mdxComponents} />
+</ArticleLayout>

@@ -1,0 +1,66 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Header from "@modules/layout/Header.astro";
+import { getCollection } from "astro:content";
+import dayjs from "dayjs";
+import { getCategoryLabel } from "@modules/category";
+
+const allArticles = await getCollection("articles");
+
+// Show only default locale articles on home page, deduplicated by translationKey
+const seen = new Set<string>();
+const articles = allArticles
+  .sort((a, b) => dayjs(b.data.createdAt).diff(dayjs(a.data.createdAt)))
+  .filter((a) => {
+    const locale = a.data.locale ?? "ko";
+    if (locale !== "ko") return false;
+    if (a.data.translationKey) {
+      if (seen.has(a.data.translationKey)) return false;
+      seen.add(a.data.translationKey);
+    }
+    return true;
+  });
+---
+
+<BaseLayout title="홈 | 봄가을">
+  <Header />
+  <main class="mt-12 mb-24">
+    <ul role="list" class="-mx-4 mb-20 grid grid-cols-1 sm:grid-cols-2">
+      {articles.map((article) => {
+        const { title, createdAt, summary, category } = article.data;
+        // article.id is like "2025-08/effective-burn-out-tips/ko" from the glob loader
+        const parts = article.id.split("/");
+        // Remove the last part (filename without .mdx) and reconstruct slug
+        const yearMonth = parts[0];
+        const slug = parts[1];
+        const href = `/article/${yearMonth}/${slug}`;
+
+        return (
+          <li
+            class="bg-background/0 relative rounded-md px-4 py-6 sm:p-8"
+            data-gtm-id={`${href}_link`}
+          >
+            <div class="mb-2 text-xs font-medium text-gray-500 dark:text-gray-400">
+              <time datetime={createdAt}>{dayjs(createdAt).format("YYYY.MM")}</time>
+              {category && (
+                <>
+                  <span class="opacity-50"> | </span>
+                  <span>{getCategoryLabel(category, "ko")}</span>
+                </>
+              )}
+            </div>
+
+            <div class="mb-2 text-xl leading-7 font-bold break-keep">
+              <a href={href} class="text-gray-900 dark:text-gray-100">
+                <span class="absolute inset-0 rounded-md transition"></span>
+                {title}
+              </a>
+            </div>
+
+            <p class="text-sm break-keep">{summary}</p>
+          </li>
+        );
+      })}
+    </ul>
+  </main>
+</BaseLayout>

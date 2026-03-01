@@ -1,0 +1,113 @@
+---
+import "@common/globals.css";
+import "../../public/pretendard-variable-gov/pretendardvariable-gov-dynamic-subset.css";
+import Footer from "@modules/layout/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: string;
+  ogImage?: string;
+  ogType?: string;
+  noIndex?: boolean;
+  jsonLd?: Record<string, unknown>;
+  canonicalUrl?: string;
+  alternates?: Array<{ locale: string; href: string }>;
+}
+
+const {
+  title = "봄가을",
+  description,
+  lang = "ko",
+  ogImage,
+  ogType = "website",
+  noIndex = false,
+  jsonLd,
+  canonicalUrl,
+  alternates,
+} = Astro.props;
+
+const fullTitle = title === "봄가을" ? title : `${title} | 봄가을`;
+const gtmId = import.meta.env.PUBLIC_GTM_ID;
+---
+
+<html lang={lang} class="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/icons8-spa-flower-96.png" />
+    <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="봄가을" />
+    <meta name="naver-site-verification" content="392b57225ecb015316d43c362eb6871db10ff17f" />
+
+    <title>{fullTitle}</title>
+    {description && <meta name="description" content={description} />}
+
+    <!-- OG tags -->
+    <meta property="og:title" content={fullTitle} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:type" content={ogType} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:creator" content="@springfall_cc" />
+
+    {noIndex && <meta name="robots" content="noindex" />}
+
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+
+    {alternates?.map(({ locale, href }) => (
+      <link rel="alternate" hreflang={locale} href={href} />
+    ))}
+
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+
+    <!-- Prevent theme flash -->
+    <script is:inline>
+      ;(() => {
+        try {
+          const key = 'colorMode';
+          const stored = localStorage.getItem(key);
+          const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const mode = stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'system';
+          const resolved = mode === 'system' ? (sysDark ? 'dark' : 'light') : mode;
+          const root = document.documentElement;
+          if (resolved === 'dark') { root.classList.add('dark'); root.classList.remove('light'); }
+          else { root.classList.add('light'); root.classList.remove('dark'); }
+        } catch {}
+      })();
+    </script>
+
+    {gtmId && (
+      <script is:inline define:vars={{ gtmId }}>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',gtmId);
+      </script>
+    )}
+  </head>
+  <body>
+    {gtmId && (
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+          height="0"
+          width="0"
+          style="display:none;visibility:hidden"
+        ></iframe>
+      </noscript>
+    )}
+
+    <div class="mx-auto max-w-(--breakpoint-md)">
+      <div class="p-4 sm:p-6 md:p-8">
+        <slot />
+        <Footer lang={lang} />
+      </div>
+    </div>
+  </body>
+</html>

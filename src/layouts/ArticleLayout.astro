@@ -1,0 +1,82 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import ArticlePageHeader from "@modules/layout/ArticlePageHeader.astro";
+import ArticleHeader from "@modules/article/ArticleHeader.astro";
+import FloatingToc from "@modules/article/FloatingToc";
+import Giscus from "@modules/giscus";
+import { uiText } from "@modules/i18n/strings";
+import { i18n, type Locale } from "@/modules/i18n/types";
+import type { Category } from "@modules/category";
+
+interface Props {
+  title: string;
+  description?: string;
+  createdAt: string;
+  updatedAt?: string;
+  category?: Category;
+  locale?: Locale;
+  ogImage?: string;
+  jsonLd?: Record<string, unknown>;
+  canonicalUrl?: string;
+  alternates?: Array<{ locale: string; href: string }>;
+  languageLinks?: Array<{ locale: string; href: string }>;
+}
+
+const {
+  title,
+  description,
+  createdAt,
+  category,
+  locale = i18n.defaultLocale,
+  ogImage,
+  jsonLd,
+  canonicalUrl,
+  alternates,
+  languageLinks = [],
+} = Astro.props;
+
+const text = uiText[locale];
+const tocLabels = {
+  tocTitle: text.tocTitle,
+  tocFloatingLabel: text.tocFloatingLabel,
+  tocCloseLabel: text.tocCloseLabel,
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  lang={locale}
+  ogImage={ogImage}
+  ogType="article"
+  jsonLd={jsonLd}
+  canonicalUrl={canonicalUrl}
+  alternates={alternates}
+>
+  <ArticlePageHeader lang={locale} />
+  <div class="relative">
+    <article class="mb-20 lg:-translate-x-38 animate-fade-in">
+      <ArticleHeader
+        title={title}
+        createdAt={createdAt}
+        summary={description}
+        category={category}
+        locale={locale}
+        languageLinks={languageLinks}
+      />
+      <slot />
+    </article>
+    <FloatingToc client:idle labels={tocLabels} />
+  </div>
+  <Giscus client:visible locale={locale} className="mt-8" />
+</BaseLayout>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .animate-fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+</style>
