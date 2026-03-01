@@ -2,7 +2,7 @@
 import BaseLayout from "./BaseLayout.astro";
 import ArticlePageHeader from "@modules/layout/ArticlePageHeader.astro";
 import ArticleHeader from "@modules/article/ArticleHeader.astro";
-import FloatingToc from "@modules/article/FloatingToc";
+import FloatingToc from "@modules/article/FloatingToc.astro";
 import Giscus from "@modules/giscus";
 import { uiText } from "@modules/i18n/strings";
 import { i18n, type Locale } from "@/modules/i18n/types";
@@ -66,7 +66,7 @@ const tocLabels = {
       />
       <slot />
     </article>
-    <FloatingToc client:idle labels={tocLabels} />
+    <FloatingToc labels={tocLabels} />
   </main>
   <Giscus client:visible locale={locale} className="mt-8" />
 </BaseLayout>

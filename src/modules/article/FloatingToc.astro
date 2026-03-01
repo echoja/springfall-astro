@@ -1,0 +1,285 @@
+---
+interface Props {
+  labels: {
+    tocTitle: string;
+    tocFloatingLabel: string;
+    tocCloseLabel: string;
+  };
+}
+
+const { labels } = Astro.props;
+---
+
+<div
+  id="floating-toc"
+  hidden
+  data-label-title={labels.tocTitle}
+  data-label-floating={labels.tocFloatingLabel}
+  data-label-close={labels.tocCloseLabel}
+>
+  <!-- Desktop sidebar -->
+  <div class="z-30 hidden opacity-50 transition hover:opacity-100 lg:block" data-toc-desktop>
+    <div
+      class="fixed z-20 max-h-[70vh] w-64 overflow-y-auto rounded-xl bg-white/90 p-3 backdrop-blur dark:bg-gray-900/85"
+      style="right: max(1rem, calc((100vw - 980px) / 2)); top: 9rem;"
+      data-toc-desktop-scroll
+    >
+      <div class="mb-2 text-xs font-semibold tracking-wide text-gray-500 uppercase dark:text-gray-400">
+        {labels.tocTitle}
+      </div>
+      <div data-toc-desktop-nav></div>
+    </div>
+  </div>
+
+  <!-- Mobile FAB + overlay -->
+  <div class="lg:hidden" data-toc-mobile>
+    <button
+      type="button"
+      aria-expanded="false"
+      aria-controls="floating-toc-panel"
+      class="fixed right-4 bottom-5 z-30 inline-flex items-center gap-2 rounded-full bg-white/90 px-4 py-2 text-sm font-semibold shadow-lg ring-1 ring-gray-200 backdrop-blur dark:bg-gray-800/90 dark:text-gray-50 dark:ring-gray-700"
+      data-toc-fab
+    >
+      <!-- List icon (lucide) -->
+      <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="8" y1="6" x2="21" y2="6"></line>
+        <line x1="8" y1="12" x2="21" y2="12"></line>
+        <line x1="8" y1="18" x2="21" y2="18"></line>
+        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+      </svg>
+      {labels.tocTitle}
+    </button>
+
+    <div class="fixed inset-0 z-40 flex items-end justify-center" hidden data-toc-overlay>
+      <button
+        aria-label={labels.tocCloseLabel}
+        class="absolute inset-0 bg-black/20"
+        type="button"
+        data-toc-overlay-bg
+      ></button>
+      <div
+        id="floating-toc-panel"
+        class="relative z-50 mb-16 max-h-[65vh] w-[min(90vw,24rem)] overflow-y-auto rounded-2xl border border-gray-200 bg-white/95 p-4 shadow-2xl backdrop-blur dark:border-gray-700 dark:bg-gray-900/90"
+        data-toc-mobile-scroll
+      >
+        <div class="mb-3 flex items-center justify-between text-sm font-semibold">
+          <span>{labels.tocTitle}</span>
+          <button
+            type="button"
+            aria-label={labels.tocCloseLabel}
+            class="rounded-full p-1 hover:bg-gray-200 dark:hover:bg-gray-800"
+            data-toc-close
+          >
+            <!-- X icon (lucide) -->
+            <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div data-toc-mobile-nav></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function initFloatingToc() {
+    const root = document.getElementById("floating-toc");
+    if (!root) return;
+
+    const labelFloating = root.dataset.labelFloating ?? "Table of contents";
+    const article = document.querySelector<HTMLElement>("article");
+    if (!article) return;
+
+    // Collect headings
+    const headings = Array.from(
+      article.querySelectorAll<HTMLElement>("h2, h3, h4, h5, h6"),
+    );
+
+    const isTocHeading = (title: string) =>
+      /^(목차|table of contents)$/i.test(title.trim());
+
+    const headingInfo = headings
+      .map((el) => {
+        const title = el.textContent?.trim() ?? "";
+        const id = el.id?.trim() ?? "";
+        const level = parseInt(el.tagName.replace(/[^0-9]/g, ""), 10);
+        const section = (el.closest("section") as Element | null) ?? el;
+        return { id, title, level, section };
+      })
+      .filter(
+        (h) =>
+          h.id && h.title && Number.isFinite(h.level) && !isTocHeading(h.title),
+      );
+
+    if (!headingInfo.length) return;
+
+    // Show the component
+    root.removeAttribute("hidden");
+
+    // Build nav HTML
+    function buildNavHTML(): string {
+      let html = `<nav aria-label="${labelFloating}" class="text-sm"><ul>`;
+      for (const item of headingInfo) {
+        const depth = Math.max(0, item.level - 2);
+        html += `<li><a href="#${item.id}" data-toc-id="${item.id}" data-toc-depth="${depth}" class="relative block rounded-md border border-transparent py-0.5 break-all transition-colors text-gray-600 dark:text-gray-400" style="padding-left:${depth * 12}px">${escapeHTML(item.title)}</a></li>`;
+      }
+      html += "</ul></nav>";
+      return html;
+    }
+
+    function escapeHTML(str: string): string {
+      const div = document.createElement("div");
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // Inject nav into desktop + mobile slots
+    const desktopSlot = root.querySelector("[data-toc-desktop-nav]");
+    const mobileSlot = root.querySelector("[data-toc-mobile-nav]");
+    if (desktopSlot) desktopSlot.innerHTML = buildNavHTML();
+    if (mobileSlot) mobileSlot.innerHTML = buildNavHTML();
+
+    // IntersectionObserver for active tracking
+    const order = headingInfo.map((h) => h.id);
+    const visible = new Set<string>();
+    const sectionToId = new Map<Element, string>();
+    headingInfo.forEach((h) => sectionToId.set(h.section, h.id));
+
+    let currentActiveIds: string[] = [];
+
+    function updateActive(newIds: string[]) {
+      if (
+        currentActiveIds.length === newIds.length &&
+        currentActiveIds.every((id, i) => id === newIds[i])
+      )
+        return;
+
+      currentActiveIds = newIds;
+      const activeSet = new Set(newIds);
+
+      // Update all toc links in both desktop and mobile
+      root!.querySelectorAll<HTMLAnchorElement>("[data-toc-id]").forEach((a) => {
+        const id = a.dataset.tocId!;
+        const depth = parseInt(a.dataset.tocDepth ?? "0", 10);
+        const isActive = activeSet.has(id);
+
+        // Remove existing bullet
+        const existingBullet = a.querySelector("[data-toc-bullet]");
+        if (existingBullet) existingBullet.remove();
+
+        if (isActive) {
+          a.classList.remove("text-gray-600", "dark:text-gray-400");
+          a.classList.add("text-black", "dark:text-white");
+          a.setAttribute("data-toc-active", "true");
+          a.setAttribute("aria-current", "true");
+          // Add bullet
+          const bullet = document.createElement("span");
+          bullet.className = "absolute";
+          bullet.style.left = `${depth * 12 - 10}px`;
+          bullet.textContent = "·";
+          bullet.setAttribute("data-toc-bullet", "");
+          a.prepend(bullet);
+        } else {
+          a.classList.add("text-gray-600", "dark:text-gray-400");
+          a.classList.remove("text-black", "dark:text-white");
+          a.removeAttribute("data-toc-active");
+          a.removeAttribute("aria-current");
+        }
+      });
+
+      // Auto-scroll ToC containers
+      scrollActiveIntoView(root!.querySelector("[data-toc-desktop-scroll]"));
+      const overlay = root!.querySelector<HTMLElement>("[data-toc-overlay]");
+      if (overlay && !overlay.hidden) {
+        scrollActiveIntoView(root!.querySelector("[data-toc-mobile-scroll]"));
+      }
+    }
+
+    function scrollActiveIntoView(container: Element | null) {
+      if (!container) return;
+      const active = container.querySelector<HTMLElement>(
+        '[data-toc-active="true"]',
+      );
+      if (!active) return;
+
+      const cRect = container.getBoundingClientRect();
+      const aRect = active.getBoundingClientRect();
+      if (aRect.top < cRect.top || aRect.bottom > cRect.bottom) {
+        active.scrollIntoView({
+          block: "nearest",
+          inline: "nearest",
+          behavior: "smooth",
+        });
+      }
+    }
+
+    // Disconnect previous observer if re-initializing
+    if ((window as any).__floatingTocObserver) {
+      (window as any).__floatingTocObserver.disconnect();
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = sectionToId.get(entry.target);
+          if (!id) return;
+          if (entry.isIntersecting) {
+            visible.add(id);
+          } else {
+            visible.delete(id);
+          }
+        });
+        updateActive(order.filter((id) => visible.has(id)));
+      },
+      { rootMargin: "-50% 0px -50% 0px" },
+    );
+
+    headingInfo.forEach((h) => observer.observe(h.section));
+    (window as any).__floatingTocObserver = observer;
+
+    // Mobile toggle
+    const fab = root.querySelector<HTMLButtonElement>("[data-toc-fab]");
+    const overlay = root.querySelector<HTMLElement>("[data-toc-overlay]");
+    const overlayBg = root.querySelector<HTMLButtonElement>("[data-toc-overlay-bg]");
+    const closeBtn = root.querySelector<HTMLButtonElement>("[data-toc-close]");
+
+    function openMobile() {
+      if (!overlay || !fab) return;
+      overlay.hidden = false;
+      fab.setAttribute("aria-expanded", "true");
+      // Scroll mobile container to active
+      scrollActiveIntoView(root!.querySelector("[data-toc-mobile-scroll]"));
+    }
+
+    function closeMobile() {
+      if (!overlay || !fab) return;
+      overlay.hidden = true;
+      fab.setAttribute("aria-expanded", "false");
+    }
+
+    fab?.addEventListener("click", () => {
+      const isOpen = fab.getAttribute("aria-expanded") === "true";
+      if (isOpen) closeMobile();
+      else openMobile();
+    });
+
+    overlayBg?.addEventListener("click", closeMobile);
+    closeBtn?.addEventListener("click", closeMobile);
+
+    // Close mobile overlay on link click
+    root
+      .querySelector("[data-toc-mobile-nav]")
+      ?.addEventListener("click", (e) => {
+        if ((e.target as Element).closest("a")) closeMobile();
+      });
+  }
+
+  // Run on initial load
+  initFloatingToc();
+  // Support View Transitions
+  document.addEventListener("astro:page-load", initFloatingToc);
+</script>
