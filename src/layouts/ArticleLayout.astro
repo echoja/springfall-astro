@@ -54,7 +54,7 @@ const tocLabels = {
   alternates={alternates}
 >
   <ArticlePageHeader lang={locale} />
-  <div class="relative">
+  <main class="relative">
     <article class="mb-20 lg:-translate-x-38 animate-fade-in">
       <ArticleHeader
         title={title}
@@ -67,7 +67,7 @@ const tocLabels = {
       <slot />
     </article>
     <FloatingToc client:idle labels={tocLabels} />
-  </div>
+  </main>
   <Giscus client:visible locale={locale} className="mt-8" />
 </BaseLayout>
 
