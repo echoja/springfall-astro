@@ -148,7 +148,7 @@ export default function FloatingToc({ labels }: FloatingTocProps) {
                   aria-current={isActive ? "true" : undefined}
                   data-toc-depth={depth}
                   className={twMerge(
-                    `relative block rounded-md border border-transparent py-1 break-all transition-colors`,
+                    `relative block rounded-md border border-transparent py-0.5 break-all transition-colors`,
                     `pl-[${depth * 12}px]`,
                     isActive
                       ? "text-black dark:text-white"
