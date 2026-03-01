@@ -67,7 +67,7 @@ import { PostPage } from "./test";
 
 이를 예시를 들어 그림과 표현하면 아래와 같이 보일 것입니다.
 
-<ContentGraph />
+<ContentGraph client:load />
 
 이런 상황에서, 앞서 이야기한 세 가지 목표를 구체화하겠습니다.
 
@@ -285,7 +285,7 @@ export const PostPage: React.FC = () => {
 }
 ```
 
-<PostPage />
+<PostPage client:load />
 
 자 이제 코드 설명 들어가겠습니다.
 
