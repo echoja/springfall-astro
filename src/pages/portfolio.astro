@@ -1,13 +1,13 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Header from "@modules/layout/Header.astro";
-import PortfolioContent from "@modules/portfolio/PortfolioContent";
+import PortfolioContent from "@modules/portfolio/PortfolioContent.astro";
 ---
 
 <BaseLayout title="포트폴리오" description="프로젝트와 경력을 모아둔 포트폴리오 페이지">
   <Header />
   <main>
-    <PortfolioContent client:load />
+    <PortfolioContent />
   </main>
 </BaseLayout>
 

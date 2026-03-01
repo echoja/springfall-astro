@@ -1,0 +1,126 @@
+---
+interface Props {
+  labels: { system: string; light: string; dark: string; group: string };
+}
+
+const { labels } = Astro.props;
+
+const modes = [
+  { value: "system", label: labels.system },
+  { value: "light", label: labels.light },
+  { value: "dark", label: labels.dark },
+] as const;
+---
+
+<div class="relative">
+  <div
+    role="radiogroup"
+    aria-label={labels.group}
+    class="theme-toggle inline-flex items-center overflow-hidden rounded-sm border border-gray-400/30 text-xs"
+  >
+    {modes.map(({ value, label }) => (
+      <button
+        type="button"
+        role="radio"
+        aria-checked="false"
+        data-theme={value}
+        class="px-2.5 py-1 whitespace-nowrap transition hover:bg-gray-400/10"
+      >
+        {label}
+      </button>
+    ))}
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = "colorMode";
+  type ColorModeSetting = "light" | "dark" | "system";
+  type ResolvedColorMode = "light" | "dark";
+
+  function applyTheme(resolved: ResolvedColorMode) {
+    const root = document.documentElement;
+    if (resolved === "dark") {
+      root.classList.add("dark");
+      root.classList.remove("light");
+    } else {
+      root.classList.add("light");
+      root.classList.remove("dark");
+    }
+    window.dispatchEvent(
+      new CustomEvent("theme-change", { detail: { theme: resolved } }),
+    );
+  }
+
+  function resolve(
+    setting: ColorModeSetting,
+    systemPref: ResolvedColorMode,
+  ): ResolvedColorMode {
+    return setting === "system" ? systemPref : setting;
+  }
+
+  function getSystemPref(): ResolvedColorMode {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  }
+
+  function init() {
+    document.querySelectorAll<HTMLElement>(".theme-toggle").forEach((group) => {
+      const buttons = group.querySelectorAll<HTMLButtonElement>(
+        "button[data-theme]",
+      );
+
+      const raw = localStorage.getItem(STORAGE_KEY) as
+        | ColorModeSetting
+        | null;
+      let setting: ColorModeSetting =
+        raw === "light" || raw === "dark" || raw === "system" ? raw : "system";
+      let systemPref = getSystemPref();
+
+      function updateUI() {
+        buttons.forEach((btn) => {
+          const isActive = btn.dataset.theme === setting;
+          btn.setAttribute("aria-checked", String(isActive));
+          if (isActive) {
+            btn.classList.add(
+              "bg-gray-900",
+              "text-white",
+              "dark:bg-gray-100",
+              "dark:text-gray-900",
+            );
+            btn.classList.remove("hover:bg-gray-400/10");
+          } else {
+            btn.classList.remove(
+              "bg-gray-900",
+              "text-white",
+              "dark:bg-gray-100",
+              "dark:text-gray-900",
+            );
+            btn.classList.add("hover:bg-gray-400/10");
+          }
+        });
+      }
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          setting = btn.dataset.theme as ColorModeSetting;
+          localStorage.setItem(STORAGE_KEY, setting);
+          applyTheme(resolve(setting, systemPref));
+          updateUI();
+        });
+      });
+
+      window
+        .matchMedia("(prefers-color-scheme: dark)")
+        .addEventListener("change", (ev) => {
+          systemPref = ev.matches ? "dark" : "light";
+          applyTheme(resolve(setting, systemPref));
+        });
+
+      updateUI();
+    });
+  }
+
+  init();
+  document.addEventListener("astro:after-swap", init);
+</script>

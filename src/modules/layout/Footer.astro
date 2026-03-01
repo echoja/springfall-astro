@@ -2,7 +2,7 @@
 import { uiText } from "@modules/i18n/strings";
 import { getLocaleFromPathname } from "@modules/i18n/util";
 import { i18n, type Locale } from "@/modules/i18n/types";
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "./ThemeToggle.astro";
 
 interface Props {
   lang?: string;
@@ -55,6 +55,6 @@ const themeLabels = {
   </div>
   <div></div>
   <div>
-    <ThemeToggle client:load labels={themeLabels} />
+    <ThemeToggle labels={themeLabels} />
   </div>
 </footer>

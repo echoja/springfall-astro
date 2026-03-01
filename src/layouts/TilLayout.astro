@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import Header from "@modules/layout/Header.astro";
-import Giscus from "@modules/giscus";
+import Giscus from "@modules/Giscus.astro";
 
 const locale = "ko";
 ---
@@ -19,6 +19,6 @@ const locale = "ko";
     </article>
   </main>
   <div class="mx-auto max-w-screen-md px-6">
-    <Giscus client:visible locale={locale} />
+    <Giscus locale={locale} />
   </div>
 </BaseLayout>
