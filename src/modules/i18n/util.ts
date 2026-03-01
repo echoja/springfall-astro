@@ -5,6 +5,6 @@ export function getLocaleFromPathname(pathname: string): Locale | null {
   return isLocale(first) ? first : null;
 }
 
-export function isLocale(value: string): value is Locale {
+function isLocale(value: string): value is Locale {
   return (i18n.locales as readonly string[]).includes(value);
 }

@@ -1,5 +1,4 @@
-/** @lintignore */
-export interface IExperience {
+interface IExperience {
   company: string;
   role: string;
   period: string;

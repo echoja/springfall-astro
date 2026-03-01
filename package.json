@@ -7,10 +7,10 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "astro build && wrangler pages deploy dist --project-name=springfall"
+    "deploy": "astro build && wrangler pages deploy dist --project-name=springfall",
+    "knip": "knip"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.7.0",
@@ -34,8 +34,10 @@
     "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
+    "@types/node": "^24.11.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "knip": "^5.85.0",
     "typescript": "^5.9.3",
     "wrangler": "^4.69.0"
   }

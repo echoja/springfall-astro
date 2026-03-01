@@ -8,9 +8,3 @@ export interface IProject {
   highlights?: string[];
 }
 
-export interface IExperience {
-  company: string;
-  role: string;
-  period: string;
-  details?: string[];
-}

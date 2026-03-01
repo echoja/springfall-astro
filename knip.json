@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/knip/schema.json",
+  "entry": ["src/pages/**/*.{astro,mdx}", "mdx-plugins/remark-codehike.mjs"],
+  "project": ["src/**/*.{astro,ts,tsx,mjs}", "mdx-plugins/**/*.mjs"],
+  "ignore": ["src/content/articles/**/*.{ts,tsx}"],
+  "ignoreDependencies": ["sharp", "tailwindcss"],
+  "paths": {
+    "@modules/*": ["src/modules/*"]
+  }
+}
