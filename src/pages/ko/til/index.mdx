@@ -78,7 +78,7 @@ TIL 이라고 쓰고 잡탕구리일기라고 읽는다.
 ## 2026-02-22 (일)
 
 - Claude Code도 찐빠가 난다...
-  ```
+  ```txt
   Line 126 — Typo: 스스로 should be 스스로 → Actually this is 스스로 which
   should be 스스로 (hmm, it reads 스스로 which seems intentional as shorthand
   for 스스로). On closer look: 스스로 is a typo for 스스로 — wait, they're the
@@ -284,7 +284,7 @@ TIL 이라고 쓰고 잡탕구리일기라고 읽는다.
 - 거짓말같이 일기쓰기 1달 하니까 좀 느슨해졌나보다.
 - Jenkins cli를 사용하려면 무슨 jenkins.jar 파일을 받아야 하는데 `/cli` 페이지로 이동하면 download하는 게 있다. `java -jar jenkins-cli.jar -s https://your-jenkins.com/ help` 이런 식으로 사용해야 한다. 좀 투박한 방법이라 흥미로웠다.
 - **Box-Drawing Characters**:  Box-drawing characters, also known as line-drawing characters, are a form of semigraphics widely used in text user interfaces to draw various geometric frames and boxes. Examples: 
-  ```
+  ```txt
   ┌─┬┐  ╔═╦╗  ╓─╥╖  ╒═╤╕
   │ ││  ║ ║║  ║ ║║  │ ││
   ├─┼┤  ╠═╬╣  ╟─╫╢  ╞═╪╡
@@ -613,7 +613,7 @@ if (navigator.share) {
 - OneSignal 이라는 좋은 서비스가 있네. 모바일 푸시 알림이 무제한이고 월 10,000개의 무료 이메일 보낼 수 있다고? 진짜로? 당장 빌드톡 이걸로 바꾼다.
 - DigitalOcean 에서 alert 추가하는 건 공짜라고 한다... 굿. https://github.com/buildtalkk/infra/commit/554a0285e7f5edabab37b265c9beba5a3cd83af0 
 
-```
+```txt
 # Monitoring alerts
 resource "digitalocean_monitor_alert" "k8s_node_cpu_80" {
   alerts {
