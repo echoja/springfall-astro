@@ -21,7 +21,7 @@ pnpm preview  # 로컬에서 빌드 결과 확인
 ## 배포
 
 ```bash
-pnpm deploy
+pnpm run deploy
 ```
 
 `astro build` 후 `wrangler pages deploy`로 Cloudflare Pages에 배포합니다.
