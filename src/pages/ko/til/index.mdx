@@ -6,9 +6,9 @@ import ArticleImage from "@modules/article/ArticleImage.astro";
 import tilImg0 from "./assets/2026-01-16-1.png";
 import tilImg1 from "./assets/2026-01-04-1.png";
 import tilImg2 from "./assets/2026-01-01-1.png";
-import { Code } from "@modules/article/format-components";
+import { mdxComponents } from "@modules/article/mdx-components";
 
-export const components = { Code };
+export const components = mdxComponents;
 
 TIL 이라고 쓰고 잡탕구리일기라고 읽는다.
 
@@ -29,6 +29,15 @@ TIL 이라고 쓰고 잡탕구리일기라고 읽는다.
 - 북티크 독서 모임 활동
 - 피아노 학원 등록
 - 겟매리드
+
+## 2026-03-05
+
+- 회사에서 정신이 좀 없다. 일본쪽이랑 미팅을 했다. 일본쪽 사업도 중요하다고 한다.
+- 
+
+## 2026-03-02
+
+- Asana에는 태그로 task를 필터링할 수 있는 기능이 이미 있다! (왜 있는 줄 몰랐을까)
 
 ## 2026-03-01
 
@@ -51,12 +60,13 @@ TIL 이라고 쓰고 잡탕구리일기라고 읽는다.
   - 아이폰 14 Pro Max는 Viewport Size가 430px x 932px 이다. 그리고 DPR은 3.0이다. 따라서 계산되는 이미지의 가로 사이즈는 430 * 3 = 1,290이며, `<picture>` 에서 사이즈 찾을 때 그 수치로 찾는다.
   - picture 태그, srcset 외에 devicePixelRatio의 쓰임새는 딱히 크진 않은 것 같다. `<canvas>` Scaling. CSS Media Queries for Background Images 등...
   - 확대/축소할 때마다 실시간으로 바뀐다. (0.5단위)
+  - 어떤 `<picture>` 안에서 `<img>` 태그가 실제로 어떤 이미지를 갖는지 확인하려면 해당 element.currentSrc 를 확인하면 된다.
 
 ## 2026-02-25 (수)
 - 정신없는 하루... 정리해야 한다!
 
 ## 2026-02-24 (화)
-- 처우 협의는 약간 허무하게 끝났다. 아래 영상에서 언급되듯 나의 현재 처우를 엑셀로 깔끔하게 정리해서 전달하는 것이 더 명쾌하게 이야기가 될 수 있어서 좋다고 했는데, 진짜로 그런 것 같다. 그냥 그 쪽에서 단념을 해버렸어. 이로써 나의 가치를 한번 또 확인하게 되었다.
+- 처우 협의는 약간 허무하게 끝났다. 아래 영상에서 언급되듯 나의 현재 처우를 엑셀로 깔끔하게 정리해서 전달하는 것이 더 명쾌하게 이야기가 될 수 있어서 좋다고 했는데, 진짜로 그런 것 같다. 그냥 그 쪽에서 단념을 해버렸어. 이로써 나의 가치가 대략 그정도 회사에서 그정도라고 가늠할 수 있게 되었다. 
 
 
 ## 2026-02-23 (월)
@@ -95,33 +105,26 @@ TIL 이라고 쓰고 잡탕구리일기라고 읽는다.
 ## 2026-02-21 (토)
 
 - 손톱을 깎았다.
-
 - 어제는 상당히 정신이 없었다...
 - 가족이 공부할 때 더 집중을 잘 하기 위해 폰을 내게 맡긴다. 난 훌륭하다고 생각했다.
 - `view-transition-name`: https://steipete.me/ 여기서 제목을 클릭하면 걔가 스무스하게 새로운 페이지 제목으로 쓱 이동한다. 그렇다면 순서가 어떻게 되는지 궁금했다. SPA에서는 명시적인 페이지 전환이 있는 게 아니고, 설령 그게 있더라도 Destination Document에서의 요소 위치가 결정되기까지 시간이 꽤 걸릴텐데, 애니메이션 진행 시점과 방법을 브라우저에서 어떻게 판단하지? 🟡 공부가 필요하다.
 - 어떤 ttf 폰트를 subset 방식으로 만드는 방법. https://leetaewook.github.io/dynamic-subset-font
 - Noto Sans KR는 Variable Fonts가 없다... 왜 있는 줄 알았지? 헛고생함. 
 - `npx skills add vercel-labs/agent-skills --skill vercel-react-best-practices` 로 쉽게 설치할 수 있다.
-- react-error-boundary 는 언제 쓰면 좋을까?
+- 🟡 react-error-boundary 는 언제 어떻게 쓰면 좋을까? 쓰면 뭐가 좋을까?
 
 ## 2026-02-19 (목)
 
 - https://example.com 관련 테스트가 실패하네? → 여기의 루트 CA는 AAA Certificate Services (Comodo)이다. 그런데 2025/04/15 Mozilla에서 이 루트인증서를 신뢰하지 않게 되었다(Mozilla/Chrome policy now limits root CA usability to 15 years after key generation). Your Node.js v24.11.1 ships with an updated NSS-based CA bundle that no longer includes it. macOS Keychain still has it (Apple hasn't removed it yet), which is why Chrome works.
-- 리드 경험을 어떻게 살릴 것인가...
-- Remarkable 선정!
+- 이력서를 발전시키는 방법
+  - 리드 경험을 어떻게 살릴 것인가?
+  - Remarkable 선정된 것도 넣자.
 - 더 어그로를 끌어라!
 - jenkins cli ingressGrpc 만으론 되지 않았다. NLB가 중간에 끼여서 생기는 이슈.
 - 이직 동기: 
-
 - 이 회사에 왜 지원했나? 물어보지 않았다. A: 도메인 오고 싶다 X. 기술적으로 성장하고 싶다. O. 이 회사가 진짜 어떤 모습인지 모르기 때문에(겉으로 봤을 때 우리 회사가 뭐가 좋아보이냐?) 커피챗을 미리 해서 이 회사가 어떤 회사인지 알 수 있는 기회가 있었다? 
 
-간절하지 않네? 붙어도 올 마음이 없네?
-간절함을 보여주는 게 예의다....
-- 건강검진 2026-02-23(월)
-
-
-
-
+간절하지 않네? 붙어도 올 마음이 없네? 라는 마음이 보이면 함께할 필요가 없다고 생각하는 것. 간절함을 보여주는 게 예의다....
 
 ## 2026-02-17 (화)
 
