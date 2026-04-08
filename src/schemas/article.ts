@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 import { categories } from "@/modules/category";
 import { i18n } from "@/modules/i18n/types";
 
