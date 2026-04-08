@@ -17,11 +17,12 @@ export const GET: APIRoute = async ({ site }) => {
 
   const allArticles = await getCollection("articles");
 
-  // Deduplicate by translationKey, prefer ko
+  // Deduplicate by translationKey, prefer ko, exclude drafts
   const seen = new Set<string>();
   const articles = allArticles
     .sort((a, b) => dayjs(b.data.createdAt).diff(dayjs(a.data.createdAt)))
     .filter((a) => {
+      if (a.data.status === "draft") return false;
       const locale = a.data.locale ?? "ko";
       if (locale !== "ko") return false;
       if (a.data.translationKey) {

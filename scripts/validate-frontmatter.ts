@@ -1,32 +1,17 @@
-#!/usr/bin/env node
+#!/usr/bin/env tsx
 
 import { readFileSync } from "node:fs";
 import { resolve, relative } from "node:path";
 import { glob } from "node:fs/promises";
 import yaml from "js-yaml";
-import { z } from "zod";
+import { articleSchema } from "@/schemas/article";
 
 const ARTICLES_DIR = resolve(import.meta.dirname, "../src/content/articles");
 
-const articleSchema = z.object({
-  title: z.string(),
-  summary: z.string(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  image: z.string().optional(),
-  imageAlt: z.string().default(""),
-  category: z
-    .enum(["회고", "리뷰", "기술", "일상", "기타", "디자인"])
-    .optional(),
-  tags: z.array(z.string()).default([]),
-  locale: z.enum(["ko", "en"]).default("ko"),
-  translationKey: z.string().optional(),
-});
-
-function parseFrontmatter(raw) {
+function parseFrontmatter(raw: string): Record<string, unknown> {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!match) return {};
-  return yaml.load(match[1]) ?? {};
+  return (yaml.load(match[1]) as Record<string, unknown>) ?? {};
 }
 
 let errors = 0;

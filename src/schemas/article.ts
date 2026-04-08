@@ -12,5 +12,6 @@ export const articleSchema = z.object({
   category: z.enum(categories).optional(),
   tags: z.array(z.string()).default([]),
   locale: z.enum(i18n.locales).default(i18n.defaultLocale),
+  status: z.enum(["draft", "published"]).default("published"),
   translationKey: z.string().optional(),
 });

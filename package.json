@@ -9,16 +9,16 @@
     "astro": "astro",
     "deploy": "astro build && wrangler pages deploy dist --project-name=springfall",
     "knip": "knip",
-    "validate": "node scripts/validate-frontmatter.mjs"
+    "validate": "tsx scripts/validate-frontmatter.ts"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.13",
-    "@astrojs/react": "^4.4.2",
-    "@astrojs/sitemap": "^3.7.0",
+    "@astrojs/mdx": "^5.0.3",
+    "@astrojs/react": "^5.0.3",
+    "@astrojs/sitemap": "^3.7.2",
     "@echoja/remark-custom-container": "^1.4.0",
     "@hbsnow/rehype-sectionize": "^1.0.7",
     "@tailwindcss/postcss": "^4.2.1",
-    "astro": "^5.17.1",
+    "astro": "^6.1.4",
     "codehike": "^1.0.7",
     "dayjs": "^1.11.19",
     "lucide-react": "^0.575.0",
@@ -40,6 +40,7 @@
     "@types/react-dom": "^19.2.3",
     "js-yaml": "^4.1.1",
     "knip": "^5.85.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "wrangler": "^4.69.0",
     "zod": "^3.25.76"
