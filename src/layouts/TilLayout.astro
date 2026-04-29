@@ -2,8 +2,16 @@
 import BaseLayout from "./BaseLayout.astro";
 import Header from "@modules/layout/Header.astro";
 import Giscus from "@modules/Giscus.astro";
+import FloatingToc from "@modules/article/FloatingToc.astro";
+import { uiText } from "@modules/i18n/strings";
 
 const locale = "ko";
+const text = uiText[locale];
+const tocLabels = {
+  tocTitle: text.tocTitle,
+  tocFloatingLabel: text.tocFloatingLabel,
+  tocCloseLabel: text.tocCloseLabel,
+};
 ---
 
 <BaseLayout
@@ -13,12 +21,13 @@ const locale = "ko";
   noIndex={true}
 >
   <Header />
-  <main class="mt-12 mb-24">
-    <article class="article mx-auto max-w-screen-md px-6">
+  <main class="relative mt-12 mb-24">
+    <article class="article mx-auto max-w-screen-md px-6 lg:-translate-x-38">
       <slot />
     </article>
+    <FloatingToc labels={tocLabels} />
   </main>
-  <div class="mx-auto max-w-screen-md px-6">
+  <div class="mx-auto max-w-screen-md px-6 lg:-translate-x-38">
     <Giscus locale={locale} />
   </div>
 </BaseLayout>
