@@ -120,6 +120,14 @@
     @apply my-[1.2em];
   }
 
+  article .inline-date {
+    @apply whitespace-nowrap
+    /* TODO: 스타일 채워넣기 */
+    /* @apply font-mono text-[75%] whitespace-nowrap; */
+    /* background-color: color-mix(in srgb, currentColor 7%, transparent); */
+    /* border-color: color-mix(in srgb, currentColor 14%, yellow); */
+  }
+
   article kbd {
     @apply border text-gray-500 text-xs font-bold border-gray-300 bg-gray-100 rounded-sm py-0.5 px-1 leading-tight whitespace-nowrap;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1),

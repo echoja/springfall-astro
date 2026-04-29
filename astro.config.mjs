@@ -8,6 +8,7 @@ import { defineConfig } from "astro/config";
 import remarkCustomContainer from "@echoja/remark-custom-container";
 import remarkGfm from "remark-gfm";
 import remarkToc from "remark-toc";
+import remarkInlineDates from "./mdx-plugins/remark-inline-dates.ts";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSectionize from "@hbsnow/rehype-sectionize";
@@ -53,6 +54,7 @@ export default defineConfig({
       remarkPlugins: [
         [remarkCustomContainer, customContainerOptions],
         remarkGfm,
+        remarkInlineDates,
         [remarkCodeHike, chConfig],
         [remarkToc, { heading: "목차|Table of Contents" }],
       ],

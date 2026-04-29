@@ -125,7 +125,7 @@ const { labels } = Astro.props;
       let html = `<nav aria-label="${labelFloating}" class="text-sm"><ul>`;
       for (const item of headingInfo) {
         const depth = Math.max(0, item.level - 2);
-        html += `<li><a href="#${item.id}" data-toc-id="${item.id}" data-toc-depth="${depth}" class="relative block rounded-md border border-transparent py-0.5 break-all transition-colors text-gray-600 dark:text-gray-400" style="padding-left:${depth * 12}px">${escapeHTML(item.title)}</a></li>`;
+        html += `<li><a href="#${item.id}" data-toc-id="${item.id}" data-toc-depth="${depth}" class="relative block rounded-md border border-transparent py-0.5 break-all transition-colors text-gray-500 dark:text-gray-400" style="padding-left:${depth * 12}px">${escapeHTML(item.title)}</a></li>`;
       }
       html += "</ul></nav>";
       return html;
@@ -172,7 +172,7 @@ const { labels } = Astro.props;
         if (existingBullet) existingBullet.remove();
 
         if (isActive) {
-          a.classList.remove("text-gray-600", "dark:text-gray-400");
+          a.classList.remove("text-gray-500", "dark:text-gray-400");
           a.classList.add("text-black", "dark:text-white");
           a.setAttribute("data-toc-active", "true");
           a.setAttribute("aria-current", "true");
@@ -184,7 +184,7 @@ const { labels } = Astro.props;
           bullet.setAttribute("data-toc-bullet", "");
           a.prepend(bullet);
         } else {
-          a.classList.add("text-gray-600", "dark:text-gray-400");
+          a.classList.add("text-gray-500", "dark:text-gray-400");
           a.classList.remove("text-black", "dark:text-white");
           a.removeAttribute("data-toc-active");
           a.removeAttribute("aria-current");
