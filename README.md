@@ -4,6 +4,11 @@ https://springfall.cc 블로그 소스코드.
 
 Astro 5 + React 19 + Tailwind CSS 4 + MDX + CodeHike. Cloudflare Pages에 배포.
 
+## Agent Notes
+
+- Agent entrypoints such as `AGENTS.md` and `CLAUDE.md` should stay thin and point back to this README.
+- When writing or editing Korean articles, follow [docs/writing-style.md](./docs/writing-style.md).
+
 ## 개발
 
 ```bash
