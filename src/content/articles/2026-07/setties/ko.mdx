@@ -8,6 +8,9 @@ category: "기술"
 locale: "ko"
 ---
 
+import ArticleImage from "@modules/article/ArticleImage.astro";
+import img0 from "./assets/i1.png";
+
 ## 목차
 
 ## 지속적으로 관리해보자
@@ -98,6 +101,15 @@ Setties에는 상태 검증 명령이 있습니다.
 ./v
 ```
 
+실행하면 아래와 같이 보입니다.
+
+<ArticleImage
+  img={img0}
+  alt="./v 실행 결과"
+>
+  ./v 실행 결과
+</ArticleImage>
+
 이 명령은 현재 Mac을 훑으면서 repo에 적어둔 기준과 맞는지 확인합니다. links, deps 등에 정의된 내용이 실제로 적용되었는지 검사합니다. Git GPG signing 처럼 선언적으로 관리되지 않는 설정도 모두 검사합니다. 추가로 repo 자체를 lint(퀄리티 유지)도 합니다.
 
 - `links.json`에 적힌 파일이 제대로 symlink 되어 있는지
@@ -113,7 +125,7 @@ Setties에는 상태 검증 명령이 있습니다.
 
 ## AI 작업의 가드레일 (schema, pre-commit, 추가 검증 스크립트)
 
-Setties의 JSON 파일에는 schema가 있습니다.
+Setties의 JSON 파일에는 **schema**가 있습니다.
 
 - `scripts/deps.schema.json`
 - `scripts/links.schema.json`
@@ -124,7 +136,7 @@ Setties의 JSON 파일에는 schema가 있습니다.
 
 예를 들어 `links.json`의 중복 key, 중복 target, source 존재 여부는 `validate_links_schema()`의 추가 검증에서 확인합니다. `deps.json`에서 존재하지 않는 dependency label을 참조하거나 dependency cycle이 생기는지도 `validate_deps_schema()`의 추가 검증에서 확인합니다.
 
-pre-commit도 비슷한 역할을 합니다. 예를 들어 아래와 같은 hook이 있습니다.
+**pre-commit**도 비슷한 역할을 합니다. 예를 들어 아래와 같은 hook이 있습니다.
 
 - 커밋 전에 upstream이 최신인지 확인합니다.
 - `.zshrc`에 하드코딩된 home path가 들어가면 막습니다.
@@ -152,7 +164,7 @@ launchd job도 비슷합니다. 자동 pull, Homebrew upgrade, Oh My Zsh update,
 
 ## 적당히 자동화
 
-자동화하기 애매한 작업은 README에 수동 단계로 남겨두었습니다.
+자동화하기 애매한 작업은 `README.md`에 수동 단계로 남겨두었습니다.
 
 예를 들면 Go 공식 설치 프로그램, App Store에서 받아야 하는 앱, Remote Login, Screen Sharing, 전원 관리의 자동 재시작, VS Code Settings Sync 같은 항목입니다. 이런 작업에는 `sudo`, GUI 조작, 계정 로그인이 필요합니다.
 
