@@ -4,12 +4,13 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pnpm validate:routes",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "astro build && wrangler pages deploy dist --project-name=springfall",
+    "deploy": "pnpm build && wrangler pages deploy dist --project-name=springfall",
     "knip": "knip",
-    "validate": "tsx scripts/validate-frontmatter.ts"
+    "validate": "tsx scripts/validate-frontmatter.ts",
+    "validate:routes": "node scripts/validate-article-routes.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.3",

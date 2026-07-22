@@ -34,7 +34,11 @@
 ## URL Conventions
 
 - `trailingSlash: "always"` is configured in `astro.config.mjs`
-- All internal page links must end with `/` (e.g., `/article/2024-02/tsup/`)
+- Article URLs always include their locale (e.g., `/ko/article/2024-02/tsup/`)
+- `src/modules/article/url.ts` is the shared article URL constructor
+- Legacy `/article/*` URLs permanently redirect to `/ko/article/*` through `public/_redirects`
+- `scripts/validate-article-routes.mjs` validates the generated site after every production build
+- All internal page links must end with `/`
 - Asset links (`/icon.png`, `/feed.xml`, CSS) do not get trailing slashes
 - Cloudflare Pages issues 308 redirects for missing trailing slashes; this config eliminates those extra round-trips
 

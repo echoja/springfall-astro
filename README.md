@@ -23,6 +23,8 @@ pnpm build
 pnpm preview  # 로컬에서 빌드 결과 확인
 ```
 
+`pnpm build` also validates that article canonicals, sitemap entries, RSS links, and the legacy redirect use localized article URLs.
+
 ## 배포
 
 ```bash
@@ -34,6 +36,8 @@ pnpm run deploy
 ## URL Conventions
 
 - `trailingSlash: "always"` is set in `astro.config.mjs`.
-- All internal page links **must** end with `/` (e.g., `/article/2024-02/tsup/`, `/ko/til/`).
+- Article URLs always include their locale (e.g., `/ko/article/2024-02/tsup/`).
+- Build article URLs with `getArticlePath` from `src/modules/article/url.ts`.
+- All internal page links **must** end with `/` (e.g., `/ko/article/2024-02/tsup/`, `/ko/til/`).
 - Asset links (`/icon.png`, `/feed.xml`, CSS) do **not** get trailing slashes.
 - Redirect destinations in `astro.config.mjs` must also include trailing slashes.

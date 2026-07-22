@@ -105,27 +105,19 @@ export default defineConfig({
         rehypeSectionize,
       ],
     }),
-    sitemap({
-      i18n: {
-        defaultLocale: "ko",
-        locales: {
-          ko: "ko",
-          en: "en",
-        },
-      },
-    }),
+    sitemap(),
   ],
 
   redirects: {
-    "/post/12": "/article/2023-03/draw-io-auto-layout/",
-    "/post/11": "/article/2023-02/knou-tips/",
-    "/post/10": "/article/2023-02/puss-in-boots/",
-    "/post/9": "/article/2022-11/i-me-mom-mom/",
-    "/post/7": "/article/2022-11/easy-promise-async-await/",
-    "/post/5": "/article/2022-10/javascript-smooth-animation/",
-    "/post/6": "/article/2022-11/everything/",
-    "/post/3": "/article/2023-07/ts-data-structure/",
-    "/post/2": "/article/2022-10/hello-sadness/",
-    "/post/1": "/article/2022-09/company/",
+    "/post/12": "/ko/article/2023-03/draw-io-auto-layout/",
+    "/post/11": "/ko/article/2023-02/knou-tips/",
+    "/post/10": "/ko/article/2023-02/puss-in-boots/",
+    "/post/9": "/ko/article/2022-11/i-me-mom-mom/",
+    "/post/7": "/ko/article/2022-11/easy-promise-async-await/",
+    "/post/5": "/ko/article/2022-10/javascript-smooth-animation/",
+    "/post/6": "/ko/article/2022-11/everything/",
+    "/post/3": "/ko/article/2023-07/ts-data-structure/",
+    "/post/2": "/ko/article/2022-10/hello-sadness/",
+    "/post/1": "/ko/article/2022-09/company/",
   },
 });

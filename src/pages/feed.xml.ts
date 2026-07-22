@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { getCollection } from "astro:content";
 import dayjs from "dayjs";
+import { getArticlePath } from "@modules/article/url";
 
 function escapeXml(s: string): string {
   return s
@@ -34,13 +35,7 @@ export const GET: APIRoute = async ({ site }) => {
 
   const itemsXml = articles
     .map((article) => {
-      const parts = article.id.split("/");
-      const yearMonth = parts[0];
-      const slug = parts[1];
-      const hasTranslation = !!article.data.translationKey;
-      const url = hasTranslation
-        ? `${BASE}/ko/article/${yearMonth}/${slug}/`
-        : `${BASE}/article/${yearMonth}/${slug}/`;
+      const url = `${BASE}${getArticlePath(article)}`;
 
       return `    <item>
       <title>${escapeXml(article.data.title)}</title>

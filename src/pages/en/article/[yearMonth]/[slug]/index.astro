@@ -2,12 +2,13 @@
 import { getCollection, render } from "astro:content";
 import ArticleLayout from "@/layouts/ArticleLayout.astro";
 import { mdxComponents } from "@modules/article/mdx-components";
+import { getArticlePath } from "@modules/article/url";
 
 export async function getStaticPaths() {
   const articles = await getCollection("articles");
 
   return articles
-    .filter((a) => a.data.locale === "en")
+    .filter((a) => a.data.locale === "en" && a.data.status !== "draft")
     .map((article) => {
       const parts = article.id.split("/");
       return {
@@ -26,16 +27,15 @@ if (translationKey) {
   const allArticles = await getCollection("articles");
   const translations = allArticles.filter((a) => a.data.translationKey === translationKey);
   if (translations.length >= 2) {
-    const parts = article.id.split("/");
     languageLinks = translations.map((t) => {
       const l = t.data.locale ?? "ko";
-      return { locale: l, href: `/${l}/article/${parts[0]}/${parts[1]}/` };
+      return { locale: l, href: getArticlePath(t) };
     });
   }
 }
 
 const site = Astro.site?.toString().replace(/\/$/, "") ?? "";
-const canonicalUrl = `${site}${Astro.url.pathname}`;
+const canonicalUrl = `${site}${getArticlePath(article)}`;
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -56,6 +56,7 @@ const jsonLd = {
   locale="en"
   jsonLd={jsonLd}
   canonicalUrl={canonicalUrl}
+  alternates={languageLinks}
   languageLinks={languageLinks}
 >
   <Content components={mdxComponents} />
