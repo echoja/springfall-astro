@@ -1,0 +1,389 @@
+---
+title: "[C] 다형성(Polymorphism) 구현하기"
+summary: "C에서 void 포인터와 함수 포인터를 활용해 다형성을 구현합니다."
+createdAt: "2021-04-21"
+updatedAt: "2021-04-22"
+imageAlt: "t_bag의 arr, len, max 멤버와 배열 요소를 나타낸 손그림"
+category: "기술"
+locale: "ko"
+---
+
+import ArticleImage from "@modules/article/ArticleImage.astro";
+import bagStructure from "./assets/bag-structure.jpg";
+import executionFlow from "./assets/execution-flow.jpg";
+
+## 개요
+
+객체지향 패러다임에서 다형성을 정의하는 법도 여러가지겠지요. [위키백과](https://ko.wikipedia.org/wiki/%EB%8B%A4%ED%98%95%EC%84%B1_(%EC%BB%B4%ED%93%A8%ED%84%B0_%EA%B3%BC%ED%95%99))에서는 프로그램 언어의 각 요소들이 다양한 자료형(type)에 속하는 것이 허가되는 성질을 가리킨다고 되어있습니다. 모두 아시다시피, C에서는 객체지향의 패러다임을 언어 차원에서 설계를 해놓지 않았으므로 그러한 개념을 구현하기가 굉장히 까다롭습니다. 이론적인 부분을 크게 다루지는 않을 것이므로, 간단하게 정의하는 것으로 시작하겠습니다. 이 글에서 다형성을 구현한다는 의미는, **소스코드 상에서 동일한 함수 호출이 다른 행동을 할 수 있게끔** 하는 것입니다.
+
+C에서는 메서드라는 개념이 없습니다. 그래서 어떤 객체에 연결된 함수를 구현하려면, 어떤 함수에다가 어떤 구조체를 직접 넣어주어야 합니다. 만약 `t_person` 이라는 구조체와 `t_dog` 라는 구조체가 있다고 가정하고, 각각 걷는다는 행동을 만든다고 가정합시다. 그러면 아마도 다음과 같이 될 것입니다.
+
+```c
+#include <stdio.h>
+
+typedef struct s_person
+{
+	char *name;
+	int age;
+	char *company;
+	char *address;
+} t_person;
+
+typedef struct s_dog
+{
+	char *name;
+	int age;
+	char *owner_name;
+} t_dog;
+
+void walk_person(t_person *self) {
+	printf("%s 은 자신의 집인 %s에서 출발해 %s로 터벅터벅 걸어간다...\n", self->name, self->address, self->company);
+}
+
+void walk_dog(t_dog *self) {
+	printf("%s 은 주인인 %s와 함께 산책한다...\n", self->name, self->owner_name);
+}
+
+int main(void) {
+	t_person person;
+	person.address = "사당동 8번출구";
+	person.age = 26;
+	person.company = "이노베이션아카데미";
+	person.name = "김철수";
+
+	t_dog dog;
+	dog.age = 5;
+	dog.name = "뭉치";
+	dog.owner_name = "김철수";
+
+	walk_person(&person);
+	walk_dog(&dog);
+}
+```
+
+꽤 심플한 코드입니다. `t_person` 과 `t_dog` 두 개의 구조체를 우선 정의한 다음, 각각의 구조체에 대한 `walk` 함수를 만들었습니다. 이 함수는 구조체를 포인터로 받아와서, 구조체의 정보를 활용하여 `printf` 함수만 호출합니다. `t_person` 의 경우 `walk_person` 함수를 호출하면 되고, `t_dog` 의 경우 `walk_dog` 함수를 호출하면 됩니다.
+
+하지만 말입니다, 이제는 어떤 **배열**을 가정합시다. **이 배열에는 `walk` 기능이 구현된 구조체 변수만 들어갈 수 있다는 전제조건** 하에, **이 배열에서 각 구조체에 대해서 `walk` 기능을 수행하고자 하려면** 어떤 코드를 써야 할까요? 다음과 같은 모양이 될텐데, 저기의 물음표에는 어떤 것이 들어가야 할까요? 애초에, 저런 코드가 가능하기나 할까요?
+
+```diff
+ /* 중략 */
+
+ int main(void) {
+     t_person person;
+     person.address = "사당동 8번출구";
+     person.age = 26;
+     person.company = "이노베이션아카데미";
+     person.name = "김철수";
+
+     t_dog dog;
+     dog.age = 5;
+     dog.name = "뭉치";
+     dog.owner_name = "김철수";
+
+-	walk_person(&person);
+-	walk_dog(&dog);
+
++	t_dog another_dog;
++	another_dog.age = 3;
++	another_dog.name = "삐삐";
++	another_dog.owner_name = "김영희";
++
++	void *walkable_things[3];
++	walkable_things[0] = &person;
++	walkable_things[1] = &dog;
++	walkable_things[2] = &another_dog;
++
++	for (int i = 0; i < 3; i++)
++		walk_??(walkable_things[i]); // 도대체 어떤 코드를 넣을 수 있을까요?
+ }
+```
+
+`i`는 `0`부터 `2`까지 순회합니다. 그러면서 **어떤 같은 함수**를 호출할 것입니다. 저기의 저 물음표는 변하지 않고 어쨌든 고정이기는 할테니까요. 하지만 그 함수는 구조체에 맞게 **각기 다르게 동작**해야 합니다. 이런 느낌의 다형성을 구현하고자 하는 것입니다.
+
+다형성을 구현하고자 하는 코드는 [스택 오버플로우](https://stackoverflow.com/questions/8194250/polymorphism-in-c)에서 영감을 받았습니다. 하지만 이 코드에는 `CAT` 과 `DOG` 가 무조건 `animal` 이라는 구조체여야 하는 제한사항이 있었습니다. 만약 `CAT` 과 `DOG` 각각 다른 정보를 저장하고 싶어서 (위에서 보시다시피 `t_person` 과 `t_dog` 가 다른 정보를 저장하고 있는 것처럼) 다른 구조체를 사용하고자 한다면 이 코드를 그대로 활용하기는 무리가 있습니다.
+
+본 글에서 구현하는 다형성은 실제 C를 사용하는 환경에서는 충분히 무의미할 것입니다. 애초에 C를 이렇게 사용하라고 만든 게 아닌데, 그렇게 사용할려고 발악을 하고 있으니까요. 이 글은 C라는 극한의 환경에서 객체지향의 개념을 조금이나마 흉내내는 것에 의의를 두고 있습니다.
+
+또한 C 에서 다형성을 구현하는 방법은 좀 더 다양할 수 있습니다. 이 글에서 나온 방법보다 더 직관적이고 쉬운 방법이 있을 수 있지만, 일단 제 선에서 실제로 구현한 것들을 정리해보았습니다.
+
+본 글에서는 [`void *`](https://dojang.io/mod/page/view.php?id=278) 와 [함수 포인터](https://dojang.io/mod/page/view.php?id=592)를 지지고 볶고 있습니다. 아직 그러한 개념이 잘 서있지 않다면, 먼저 개념을 익히고 오면 더 수월하게 이해가 잘 될 것입니다!
+
+## `t_bag` 간단하게 구현하기
+
+일단, 위에서는 어떤 배열이라고 가정했는데, 좀 더 기능이 있는 배열을 만들어보고자 합니다. 날 것의 배열을 그대로 가져다 쓰기에는 불편한 점이 한두 가지가 아니므로 간단한 컨테이너를 만들고 본격적으로 다형성을 알아보도록 하겠습니다.
+
+이 배열은 `t_bag` 라는 이름을 가지고 있고, 내부의 요소가 어느정도 차게 되면 자동으로 확장하는 구조체입니다. 내부에는 어떤 것도 저장할 수 있어야 하기 때문에 `void *` 배열, 즉 `void **` 인 `arr`, 이 배열의 유효한 길이를 나타내는 `len`, 이 배열이 실제로 할당되어 있는 최대 범위를 나타내는 `max` 변수로 이루어져 있습니다.
+
+```c
+typedef struct s_bag
+{
+	void **arr;
+	int len;
+	int max;
+} t_bag;
+```
+
+`arr` 배열은 동적으로 크기가 변하므로, 동적으로 메모리를 할당하는 함수인 `malloc` 을 내부적으로 사용할 예정이며, 처음 초기화를 담당하는 `create_bag` 함수를 작성합니다.
+
+아래에 있는 `m` 함수는 단순히 `malloc` 을 수행해주는 래퍼 함수입니다. `malloc` 의 결과는 `target` 에 저장됩니다. `malloc` 이 성공했다면 TRUE 를, 실패했다면 FALSE 를 반환합니다. 하지만 추후 작성할 모든 코드는 `malloc` 에러 상황에 대한 대처를 하지 않았으므로, `m` 의 결과가 `TRUE` 인지 `FALSE` 인지에 대해서는 아무런 상관이 없습니다. `create_bag` 함수를 살펴보면 알겠지만, 일단 최초의 최대 크기를 `10`으로 잡아놓습니다.
+
+```c
+#include <stddef.h>
+#include <stdlib.h>
+
+typedef int t_bool;
+#define TRUE 1
+#define FALSE 0
+
+t_bool	m(void *target, size_t size)
+{
+	void	**pt;
+
+	pt = (void **)target;
+	*pt = malloc(size);
+	if (*pt == 0)
+		return (FALSE);
+	return (TRUE);
+}
+
+t_bag create_bag()
+{
+	t_bag bag;
+
+	bag.len = 0;
+	bag.max = 10;
+	if (!m(&bag.arr, sizeof(void *) * 10))
+		exit(0);
+	return (bag);
+}
+```
+
+일단 `create_bag` 로 `t_bag` 를 만들고 나면, 거기에 `bag_add` 함수로 항목을 추가해줄 수 있습니다. 이 함수는 아래와 같이 구현됩니다. 이 함수는 호출될 때마다 마지막 자리에 항목을 추가시키며, 현재 길이가 최대 크기의 1/2 보다 커질 경우 최대 크기를 두 배 확장합니다.
+
+```c
+void bag_add(t_bag *bag, void *item)
+{
+	void **new_arr;
+
+	bag->arr[bag->len] = (void *)item;
+	bag->len += 1;
+	if (bag->len > bag->max / 2)
+	{
+		bag->max *= 2;
+		m(&new_arr, sizeof(void *) * bag->max);
+		for (int i = 0; i < bag->len; i++)
+			new_arr[i] = bag->arr[i];
+		free(bag->arr);
+		bag->arr = new_arr;
+	}
+}
+```
+
+그 다음 이 구조체의 항목들을 순회하기 쉽도록 `bag_foreach` 함수를 만듭니다. 이 함수는 다른 함수포인터를 인수로 받아와서, 각 항목을 해당 함수로 실행시키는 함수입니다. 아래에서 확인하실 수 있습니다.
+
+```c
+void bag_foreach(t_bag *bag, void (*func)(void *))
+{
+	for (int i = 0; i < bag->len; i++)
+		func(bag->arr[i]);
+}
+```
+
+<ArticleImage
+  img={bagStructure}
+  alt="t_bag의 arr, len, max 멤버와 배열 요소를 나타낸 손그림"
+>
+  <code>t_bag</code> 의 구조
+</ArticleImage>
+
+## `walk` 기능을 구현했다는 맥락을 만들기
+
+이게 도대체 무슨 말일까요? `walk` 기능을 구현했다는 맥락을 만든다는 게 무슨 말일까요? 저도 모르겠습니다. 적당한 말이 떠오르지 않습니다.
+
+우리가 앞서 어떤 배열을 가정하고 그 배열에는 **`walk` 기능이 구현된 구조체 변수만 들어갈 수 있다는 전제조건**을 붙인다고 이야기를 했습니다. 그러니까 우리가 새롭게 만들 `t_bag` 구조체에 들어가는 것들은 `walk` 기능이 구현되어 있다는 약속이 필요합니다. 불행히도 C에는 프로그래밍 문법 차원에서 이러한 전제 조건을 붙일 수 없습니다. `t_bag` 가 `void *` 를 저장하고 있다고 해서 각 항목을 검사하여 `walk_person` 함수와 `walk_dog` 함수로 분배해줄 수 있는 능력은 전무한 것이죠.
+
+`t_bag` 에는 **`walk` 기능을 구현하고 있음을 보증하는 별도의 구조체, 즉 `t_walkable`를 저장**해야 하며, 이 `t_bag` 에 저장되는 것들은 모두 `t_walkable` 를 저장하고 있다고 스스로 머릿속에 기억해놓고 있어야 합니다. (어디 주석에다가 적어 놓읍시다)
+
+```c
+typedef struct s_walkable
+{
+	void (*walk)(void *raw_self);
+	void *object;
+} t_walkable;
+```
+
+`t_walkable` 구조체는 지금으로썬 두 가지 멤버 변수를 지니고 있습니다.
+
+1. `walk`: 함수 포인터입니다. `void *` 을 인수로 받고 있는 함수입니다. 나중에 실제로 실행하는 시점에서, **실행할 함수**를 저장합니다.
+2. `object`: `void *` 입니다. 나중에 실제로 실행하는 시점에서, 그 **주체**를 저장합니다.
+
+이 무수한 `void *` 의 향연은 무엇이며, 이것들이 나중에 어떻게 동작하는지 도저히 감이 안와도 괜찮습니다. 추후에 모든 코드를 작성한 후 설명할 예정입니다.
+
+그리고 지금은 편의상 지금껏 언급해왔던 `t_bag` 를 담고있는 구조체를 만들어 추후 접근하기 쉽게 만들겠습니다. 아래에서 `t_vtables` 를 정의합니다. ([가상함수 테이블](https://musket-ade.tistory.com/entry/C-%EA%B0%80%EC%83%81%ED%95%A8%EC%88%98-%ED%85%8C%EC%9D%B4%EB%B8%94-V-Table)의 실제 역할과는 많이 다릅니다.)
+
+```c
+typedef struct s_vtables
+{
+	/* contains t_walkable* */
+	t_bag walkables;
+} t_vtables;
+
+t_vtables *get_vtables()
+{
+	static t_vtables t;
+
+	if (!t.walkables.arr)
+		t.walkables = create_bag();
+	return &t;
+}
+```
+
+`get_vtables` 함수 안에 [정적 변수](https://dojang.io/mod/page/view.php?id=690)를 선언하여 전역 변수처럼 사용할 예정입니다.
+
+## 준비 단계: t_bag 에 적절한 데이터를 만들어 넣기
+
+일단 코드의 향연입니다. `create_walkable`, `create_person`, `create_dog` 함수를 만듭니다. 이 각각의 함수들은 각각의 구조체를 만들면서, 동시에 적절하게 `get_vtables()->walkables` 에 앞서 말한 보증 구조체를 집어넣어야 합니다.
+
+```c
+t_walkable *create_walkable(void *obj, void (*walk_handler)(void *)) {
+	t_walkable *walkable;
+
+	m(&walkable, sizeof(t_walkable));
+	walkable->object = obj;
+	walkable->walk = walk_handler;
+	bag_add(&get_vtables()->walkables, walkable);
+	return walkable;
+}
+
+void create_person(t_person def) {
+	t_person *person;
+
+	m(&person, sizeof(t_person));
+	person->address = def.address;
+	person->age = def.age;
+	person->company = def.company;
+	person->name = def.name;
+	create_walkable(person, walk_person);
+}
+
+void create_dog(t_dog def) {
+	t_dog *dog;
+
+	m(&dog, sizeof(t_dog));
+	dog->age = def.age;
+	dog->name = def.name;
+	dog->owner_name = def.owner_name;
+	create_walkable(dog, walk_dog);
+}
+```
+
+`create_person` 과 `create_dog` 함수는 우선 단순한 구조체를 입력용으로 받아서 새로운 구조체를 동적으로 할당하여 만들고, `create_walkable` 함수를 호출하면서 끝이 납니다.
+
+`create_walkable` 함수는 첫 번째 인수로 `void *obj` 를 받아오고, 두번째 인수로 `void (*walk_handler)(void *)`를 받아옵니다. 앗, 우리가 만들었던 `walk_person` 함수와 `walk_dog` 함수는 각각 `t_person *` 과 `t_dog *` 를 인수로 받았기 때문에 함수 포인터의 타입과 일치하지 않게 됩니다. (함수 포인터의 경우는 모든 요소가 전부 일치해야 합니다.) 그래서 두 함수를 조금 수정해야 위 코드가 정상적으로 돌아갑니다.
+
+```diff
+-void walk_person(t_person *self) {
++void walk_person(void *raw_self) {
++	t_person *self;
++
++	self = (t_person *)raw_self;
+     printf("%s 은 자신의 집인 %s에서 출발해 %s로 터벅터벅 걸어간다...\n", self->name, self->address, self->company);
+ }
+
+-void walk_dog(t_dog *self) {
++void walk_dog(void *raw_self) {
++	t_dog *self;
++
++	self = (t_dog *)raw_self;
+     printf("%s 은 주인인 %s와 함께 산책한다...\n", self->name, self->owner_name);
+ }
+```
+
+아직까지 전혀 감이 오지 않으리라 생각합니다. 실제로 호출하면서 어떻게 진행되는지 살펴봅시다.
+
+## 실행 단계: 함수 호출하기
+
+코드를 조금만 더 작성해 보도록 하겠습니다.
+
+```c
+void do_walk(void *ptr) {
+	t_walkable *walkable;
+
+	walkable = (t_walkable *)ptr;
+	walkable->walk(walkable->object);
+}
+
+void all_walk() {
+	bag_foreach(&get_vtables()->walkables, do_walk);
+};
+
+void test_all_walk()
+{
+	t_person person_def;
+	person_def.address = "사당동 8번출구";
+	person_def.age = 26;
+	person_def.company = "이노베이션아카데미";
+	person_def.name = "김철수";
+
+	t_dog dog_def;
+	dog_def.age = 5;
+	dog_def.name = "뭉치";
+	dog_def.owner_name = "김철수";
+
+	create_person(person_def);
+	create_dog(dog_def);
+	all_walk();
+}
+
+int main(void)
+{
+	test_all_walk();
+}
+```
+
+일단 `get_vtables()->walkables` 의 요소는 실제로 우리가 `t_walkable *` 만을 저장했지만, 타입은 `void *` 이므로 `do_walk` 함수 내부에서 캐스팅을 해준다음, `walkable->walk(walkable->object);` 로 실제 호출을 해줍니다! 이 호출을 통해서 **이미 저장된 `walk_person` 혹은 `walk_dog` 함수가 적절하게 호출**됩니다. 그것도 이 함수 호출의 **주체(`object`)**와 함께요.
+
+그러면 이제 아래 결과가 나올 것입니다.
+
+```txt
+김철수 은 자신의 집인 사당동 8번출구에서 출발해 이노베이션아카데미로 터벅터벅 걸어간다...
+뭉치 은 주인인 김철수와 함께 산책한다...
+```
+
+## 어떻게 이런 결과가?
+
+어떻게 이런 결과가 나왔을까요?
+
+<ArticleImage
+  img={executionFlow}
+  alt="create_person과 create_dog가 walkable을 bag에 저장하고 실행하는 과정을 나타낸 손그림"
+  caption="실행되는 과정"
+/>
+
+준비하고 실행되는 과정은 간단합니다. 위 그림과 같이 준비 단계에서 특정 `t_bag` 에 잘 저장시켜 놓은 다음 실행 단계에서 차례로 잘 실행하면 끝납니다. 다만, 각각의 항목이 언제 어떻게 들어올 지 몰라서 `void *` 를 걸어두고, 또 그것을 실제로 사용할 수 있도록 캐스팅하는 과정이 있어 좀 더 복잡하게 느껴질 뿐입니다. 찬찬히 코드가 흘러가는 흐름을 본다면 흐름이 보일 것입니다!
+
+```c
+typedef struct s_walkable
+{
+	void (*walk)(void *raw_self);
+	void *object;
+} t_walkable;
+```
+
+위 코드는 앞서 선언하였던 `t_walkable` 입니다. 여기서 `object` 가 `void *` 인 이유는, 실제로 이 함수를 사용할 주체가 어떤 구조체일지 예상할 수 없기 때문입니다. 당장에 우리가 `t_person` 과 `t_dog` 을 만들었었지요. 근데 우리가 구조체를 더 추가하고 싶다면요? `t_cat` 을 추가했다 하더라도, `t_cat`을 생성하는 시점에서 올바르게 `walkable`를 만들고 `get_vtables()->walkables` 에 잘 저장만 해놨다면 순회하는 데 아무런 문제가 없습니다. `walk` 의 타입인 `void(*)(void *)` 에서, 첫번째 파라미터의 타입이 `void *` 인 것도 같은 이유입니다.
+
+이 `walk` 함수의 나머지 부분은 필요에 따라 변형해나갈 수 있습니다. 예를 들어 걸을 때마다 현재 시각에 따라서 행동을 다르게 구현하기 위해 `int time` 매개변수를 추가하고 싶다고 가정합시다. 그러면 아래와 같이 walk 의 타입을 수정한 후 각각의 `walk_...` 함수의 구조를 맞춰서 구현하면 됩니다. 또한 `t_walkable` 에 `walk` 라는 함수 하나만 존재하리란 법도 없고 이 구조체에 다른 멤버 변수를 넣지 못하리란 법도 없습니다. 예를 들어 걸을려면 다리가 필요하니, 다리의 갯수를 나타내는 변수를 추가한다고 가정합시다. 그럼 아래와 같이 만들면 되지 않을까요? 그 다음 각각의 `create_...` 함수에서 `leg_count` 값을 같이 집어넣어 주는 것이지요. (이 코드는 패스)
+
+```diff
+  typedef struct s_walkable
+  {
+- 	void (*walk)(void *raw_self);
++ 	void (*walk)(void *raw_self, int time);
++ 	int leg_count;
+      void *object;
+  } t_walkable;
+```
+
+어쨌든 우리는 하나의 `walkable->walk(walkable->object);` 라는 코드로 `walk_person(&person)` 혹은 `walk_dog(&dog)` 함수가 적절하게 실행되도록 만들었습니다! 이로써 다형성이 충족되었습니다. 고생하셨습니다. 본 코드는 아래 깃허브에 올라가 있습니다. 참조해주세요.
+
+[https://github.com/echoja/polymorphism-c](https://github.com/echoja/polymorphism-c)
