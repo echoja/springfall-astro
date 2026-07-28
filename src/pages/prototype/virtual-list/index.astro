@@ -1,0 +1,28 @@
+---
+// PROTOTYPE — Can one estimated row height plus live measurement keep a
+// 10,000-item, variable-height list feeling natural with normal window scroll?
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@modules/layout/Header.astro";
+import VirtualListPrototype from "./_VirtualListPrototype";
+---
+
+<BaseLayout title="Virtual List Prototype" noIndex>
+  <Header />
+  <main class="mb-24">
+    <div class="mb-8">
+      <div class="mb-2 text-xs font-bold tracking-widest text-amber-600 uppercase">
+        Throwaway prototype
+      </div>
+      <h2 class="mb-3 text-3xl font-black">10,000 variable-height items</h2>
+      <p class="leading-7">
+        One approximate row height, live measurements near the viewport, normal
+        window scrolling, and scroll-anchor correction. Use the jump buttons to
+        test cold regions of the list.
+      </p>
+    </div>
+
+    <VirtualListPrototype client:only="react">
+      <div slot="fallback" style="height: 1760000px" aria-hidden="true"></div>
+    </VirtualListPrototype>
+  </main>
+</BaseLayout>
