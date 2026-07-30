@@ -402,11 +402,7 @@ function DynamicVirtualList({
   }, [model, readViewport]);
 
   useLayoutEffect(() => {
-    const pending = new Map<number, number>();
-    let frame = 0;
-
-    const flush = () => {
-      frame = 0;
+    const observer = new ResizeObserver((entries) => {
       const currentViewport = viewportRef.current;
       const relativeScroll = Math.max(
         0,
@@ -416,7 +412,14 @@ function DynamicVirtualList({
       let correction = 0;
       let changed = false;
 
-      for (const [rowIndex, nextHeight] of pending) {
+      for (const entry of entries) {
+        const rowIndex = Number((entry.target as HTMLElement).dataset.rowIndex);
+        const box = Array.isArray(entry.borderBoxSize)
+          ? entry.borderBoxSize[0]
+          : entry.borderBoxSize;
+        const nextHeight = Math.ceil(
+          box?.blockSize ?? entry.contentRect.height,
+        );
         const previousHeight = model.measured.get(rowIndex) ?? model.estimate;
         const delta = nextHeight - previousHeight;
         if (Math.abs(delta) < 0.5) continue;
@@ -426,7 +429,6 @@ function DynamicVirtualList({
         if (rowIndex < anchorRow) correction += delta;
         changed = true;
       }
-      pending.clear();
 
       if (correction !== 0 && currentViewport.scrollY > currentViewport.listTop) {
         window.scrollBy({ top: correction });
@@ -435,25 +437,11 @@ function DynamicVirtualList({
         setRevision((value) => value + 1);
         readViewport();
       }
-    };
-
-    const observer = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        const rowIndex = Number((entry.target as HTMLElement).dataset.rowIndex);
-        const box = Array.isArray(entry.borderBoxSize)
-          ? entry.borderBoxSize[0]
-          : entry.borderBoxSize;
-        const height = Math.ceil(box?.blockSize ?? entry.contentRect.height);
-        pending.set(rowIndex, height);
-      }
-
-      if (!frame) frame = window.requestAnimationFrame(flush);
     });
     rowObserverRef.current = observer;
     rowNodesRef.current.forEach((node) => observer.observe(node));
 
     return () => {
-      if (frame) window.cancelAnimationFrame(frame);
       observer.disconnect();
       if (rowObserverRef.current === observer) rowObserverRef.current = null;
     };

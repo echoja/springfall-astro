@@ -12,11 +12,11 @@ Run `pnpm dev`, then open `/prototype/virtual-list/`.
 
 - One estimated row height per variant; no per-item height calculation.
 - A Fenwick tree maps scroll offsets to rows and applies measured height deltas.
-- One `ResizeObserver` measures mounted rows and batches corrections in animation frames.
+- One `ResizeObserver` measures mounted rows and applies each native observer batch immediately.
 - Changes above the current anchor correct `window.scrollY`; changes below it only alter the total height.
 - The Astro fallback is one estimated-height div, not an SSR list. It provides a scroll surface before React loads.
 
-## Playwright performance run
+## Baseline Playwright performance run
 
 Final production build, Chrome 151 / Pixel 10 emulation at 393×852:
 
@@ -36,6 +36,20 @@ FCP was 1.10–1.12 seconds. The cold first-card time is mainly asset delivery: 
 The single fallback div reduced cold-start CLS without recent input from about 0.082 to 0.0002. Under a harsher 150 ms / 0.4 Mbps pre-hydration test, a starting scroll position of 880,000 px became 881,057 px after hydration; mounted items were 4,992–5,004 and item 5,000 remained present.
 
 At 820 px wide, variant B rendered two 344 px columns. A jump to item 5,000 mounted both items 4,999 and 5,000 with 30 cards total. Mobile resizing preserved the item-5,000 anchor. No console or page errors occurred in the final run.
+
+## Immediate observer correction experiment
+
+The original prototype copied `ResizeObserver` entries into a pending map and applied them in a separately scheduled animation frame. Removing that extra frame produced this result on variant C under 6× CPU slowdown, throttled mobile networking, and a 128 MiB V8 old-space cap:
+
+- Forced row 4,999, immediately above the item-5,000 anchor, to grow by 180 px.
+- `scrollY` corrected by exactly 180 px.
+- Item 5,000 moved by 0 px in the viewport.
+- Observer-to-`scrollBy` latency measured 0 ms.
+- A subsequent 2.5-second continuous scroll had a 9.3 ms p95 frame interval, 9.4 ms maximum, and no frames over 50 ms.
+- Eight article cards and 151 total DOM elements remained mounted; used JS heap after GC was 6.25 MiB.
+- No console or page errors occurred.
+
+This removes the guaranteed one-frame delay from height correction. Real content can still do expensive layout work before the observer callback, but the virtualizer no longer adds a second frame afterward.
 
 ## Verdict
 

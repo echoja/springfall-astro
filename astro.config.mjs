@@ -7,8 +7,10 @@ import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import remarkCustomContainer from "@echoja/remark-custom-container";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
 import remarkToc from "remark-toc";
 import remarkInlineDates from "./mdx-plugins/remark-inline-dates.ts";
+import rehypeKatex from "rehype-katex";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSectionize from "@hbsnow/rehype-sectionize";
@@ -52,6 +54,7 @@ export default defineConfig({
     react(),
     mdx({
       remarkPlugins: [
+        [remarkMath, { singleDollarTextMath: false }],
         [remarkCustomContainer, customContainerOptions],
         remarkGfm,
         remarkInlineDates,
@@ -102,6 +105,7 @@ export default defineConfig({
             },
           },
         ],
+        rehypeKatex,
         rehypeSectionize,
       ],
     }),
