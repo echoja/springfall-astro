@@ -140,7 +140,10 @@ export function Anchor({
   href,
   ...restProps
 }: React.ComponentProps<"a">) {
-  const isInternal = href?.startsWith("/article") || href?.startsWith("#");
+  const isInternal =
+    href?.startsWith("/article") ||
+    href?.startsWith("#") ||
+    href?.startsWith("/");
 
   // Detect heading anchor from rehype-autolink-headings props
   // Props may be passed as various types (string/number/boolean) depending on framework

@@ -28,6 +28,7 @@ const usePicture = img && img.format !== "gif" && img.format !== "svg";
     <Picture
       src={img}
       alt={alt}
+      width={width}
       formats={["avif", "webp"]}
       class={imgClass}
       loading="lazy"

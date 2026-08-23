@@ -40,15 +40,172 @@ TIL 이라고 쓰고 잡탕구리일기라고 읽는다.
 
 :::
 
+## 2026-08-23 (Sun)
+
+- Need to finish [생각의 기술 review](/ko/article/2026-07/thinking-skills/)
+
+## 2026-08-22 (Sat)
+
+- ChatGPT Voice seems to have gotten better overall.
+
+## 2026-08-21 (Fri)
+
+- The last day of the week.
+
+## 2026-08-20 (Thu)
+
+- I took a TOEFL listening diagnostic test, which is designed to assess my current level, and got a perfect score. I wasn't expecting that—I think I got a bit lucky.
+
+## 2026-08-19 (Wed)
+
+- I found a cool service called [Tangled](https://tangled.org/). It's like GitHub, but built on the AT Protocol. It has a welcoming atmosphere, and it seems to aim to be more of a community than just a code-hosting platform.
+
+## 2026-08-18 (Tue)
+
+- Book Review of The bird that drinks tears
+  - As a reader, it's easy to be drawn to a character's single-minded determination. A story about personal growth can also be deeply moving. But this book doesn't portray either of those very strongly.
+  - (pushing back on the suggestion not to use "them") I think they are parallel in the sense that both are effective ways of drawing readers in.
+- If the outage of a service prevents you from building and testing your software, it's time for you to take things into your own hands. (from Tangled's [Run your own CI](https://blog.tangled.org/selfhost-ci/))
+
+## 2026-08-10 (월)
+
+- I recently realized that stepping out of my comfort zone is effective not only for improving my software development skills but also for learning English. Should I write this TIL in English? It quickly causes me menetal fatigue. That's true. Should I take on a challenge?
+- I subscribed to a new service. [RIDI Select](https://select.ridibooks.com/home) is similar to Millie's Library, but it costs only half as much. I've been wanting to read «The Bird That Drinks Tears», and now I'm one step closer to making that dream a reality.
+- I need to set a new rule for myself to help stabilize my mental state.
+  - When I feel like opening Youtube, read the novel instead. (Stop watching YouTube and browsing random online communities)
+  - Focus on learning English to conquer TOEFL on November. Don't overthink things at work. Just do what I'm asked to do, and don't go out of my way to improve the workflow.
+  - Keep the resume update simple. Don't dig into things just to understand them more deeply.
+- Avoid unnecessary friction with 서준. Follow him as much as possible.
+- How can I handle 
+
+## 2026-08-09 (일)
+
+- 1개 언어 내 2600개 문구 update ⨯ 7개 환경 하는 작업 하는데 6시간이 걸렸다. 그래서 현타가 왔다. 이런 쉬운 작업이, 이렇게 시간이 오래 걸릴 일인가? 사실상 비즈니스 임팩트는 없는 것.
+- 서준이가 짜증나게 군다. 그런데 그 벽을 넘어야 한다. 그런데 그 벽을 꼭 지금 넘어야 할까? 안그래도 할 게 많은데 지금 넘을 필요는 없지 않을까?
+- 오늘, 19:00에 집을 나섰다. 칭찬한다, 나. 하마터면 23:00까지 누워서 빈둥빈둥 놀 뻔 했잖아. 잠깐이라도 나 자신을 직시하는 시간을 갖는 것. 아주 잘 했어. 나의 자존감을 올리기 위해 하루에 한 번 스스로에 대한 칭찬을 해줘야겠다. 나는 자존감이 그다지 높진 않다.
+- 문득 떠오른 생각. 이전에 면접을 볼 때 나를 일부러 어려운 환경에 둠으로써 (Comfort Zone으로부터 일부러 벗어남으로써) 성장을 추구한다고 했다. 그런데 사례가 기억나지 않았다. 지금도 나지 않는다.
+- 거울 보기는 언제나 어렵다. 어렵지 않은 것 같으면서도.
+
+## 2026-08-03 (월)
+
+- 주말 간 러닝을 쉬었다. 시계도 본가에 놔두고 왔다. 오늘은 했다. 기록이라는 속박에서 잠깐 풀려있는 기분이다.
+- 진격의거인 애니를 가족과 함께 정주행하고 있다. 어제부로 시즌3까지 다 봤다. 처절하게 살아남는 이야기이다. '생존'이라는 것을 다시 생각해본다. 이 사회는 생존이라는 측면에서는 난이도가 Easy한 세계다. 그치만 사람들은 저마다 스스로를 구덩이로 빠트린다.
+
+## 2026-08-02 (일)
+
+- 10년 가까이 쓰던 비밀번호를 싹 수정했다. 노출됐다길래. rdx로 시작하는 비밀번호. 거의 60여개 되는 계정들을 처리했다. 비번을 바꾸거나 삭제했다. 나는 bitwarden의 노예이고, 그 Master 키도 바꾸었다. 이제 난 겹치는 비밀번호가 없다.
+- 여전히 [humminglab](https://blog.humminglab.io/posts/tls-cryptography-11-ecc/) 이라는 곳의 암호화를 이해하려고 애쓰고 있다. 최종 목적은 ECIES를 이해하는 것이다.
+- HKDF(HMAC Based Key Derivation Function): 무작위성은 충분하지만 분포가 고르지 않을 때 사용. (예: ECDH의 결과물)
+- ECIES(Elliptic Curve Integrated Encryption Scheme): 사실상 TLS랑 원리가 비슷한 게 아닐까?
+  1. 서버(수신) 측에서는 미리 `serverPublicKey`를 배포해둔다. 이 키는 EC 방식으로 만들었고 curve 종류(prime256v1)도 미리 정해둔 상태이다. 이 때 `serverPublicKey`는 G⋅`serverPrivateKey` 이다. (실질적으로 secret은 하나이다)
+  2. 클라이언트(송신) 측에서는 데이터를 보낼 때마다 자신의 EC based key pair를 만든다. (마찬가지로 실질적인 secret은 하나이며 곡선도 미리 약속된 prime256v1로 선택한다.)
+  2. 클라이언트에서 자신의 `tempPrivateKey`와 `serverPublicKey`로 DH 연산을 돌려 `S`를 만든다. DH 연산은 EC방식과 일반 방식이 있지만 Node.js 등에서 키 자체에 타입 정보가 있으므로 ECDH 방식으로 알아서 잘 한다.
+  2. `S`는 HKDF 등을 이용해 AES 키로 사용하기 좋은 형태로 변환한다. (`AESKey`)
+  2. AES는 블록 암호 알고리즘으로서, 블록 순서 위변조 방지를 위한 AES-GCM 모드로 `message`를 암호화하여 `encryptedMessage`를 생성한다. 비트는 256를 사용. IV를 위한 `nonce`, 검증을 위한 `tag`도 붙인다.
+     - AES-GCM 는 IV(Initialization Vector)를 요구한다. 어차피 매번 새롭게 `AESKey`를 만드는데 왜 `nonce`까지 필요하냐고? 글쎄... 나도 정확히 이해한 건 아니지만 `입력값 예측 가능성`을 없앤다는 데 의의가 있는 것 같다.
+  2. 이제 클라이언트는 `tempPublicKey`, `encryptedMessage`, `nonce`, `tag` 4개의 정보를 서버로 보낸다.
+  2. 서버는 tempPublicKey⋅serverPrivateKey로 `S`를 복원하고 동일한 HKDF로 동일한 `AESKey`를 복구한다.
+  2. 서버는 `AESKey`, `nonce`, `tag`, `encryptedMessage`로 `message`를 복호화하여 사용.
+  2. 클라이언트 측에서는 HDKF(HMAC-based Key Derivation Function)를 이용해 publicKey를 랜덤화한다. HDKF 함수의 목적은 publicKey를 
+
+아래 명령어를 실행하면,
+
+```sh
+$ openssl s_client -connect springfall.cc:443 -tls1_3
+```
+
+아래와 같은 결과가 나온다.
+
+```txt
+Connecting to 172.67.218.206
+CONNECTED(00000005)
+depth=2 C=US, O=Google Trust Services LLC, CN=GTS Root R4
+verify return:1
+depth=1 C=US, O=Google Trust Services, CN=WE1
+verify return:1
+depth=0 CN=springfall.cc
+verify return:1
+---
+Certificate chain
+ 0 s:CN=springfall.cc
+   i:C=US, O=Google Trust Services, CN=WE1
+   a:PKEY: EC, (prime256v1); sigalg: ecdsa-with-SHA256
+   v:NotBefore: Jun 27 08:46:14 2026 GMT; NotAfter: Sep 25 09:46:09 2026 GMT
+ 1 s:C=US, O=Google Trust Services, CN=WE1
+   i:C=US, O=Google Trust Services LLC, CN=GTS Root R4
+   a:PKEY: EC, (prime256v1); sigalg: ecdsa-with-SHA384
+   v:NotBefore: Dec 13 09:00:00 2023 GMT; NotAfter: Feb 20 14:00:00 2029 GMT
+ 2 s:C=US, O=Google Trust Services LLC, CN=GTS Root R4
+   i:C=BE, O=GlobalSign nv-sa, OU=Root CA, CN=GlobalSign Root CA
+   a:PKEY: EC, (secp384r1); sigalg: sha256WithRSAEncryption
+   v:NotBefore: Nov 15 03:43:21 2023 GMT; NotAfter: Jan 28 00:00:42 2028 GMT
+---
+Server certificate
+-----BEGIN CERTIFICATE-----
+MIIDcjCCAxegAwIBAgIQONlJD9+FTpwOJ9wXajkdSzAKBggqhkjOPQQDAjA7MQsw
+CQYDVQQGEwJVUzEeMBwGA1UEChMVR29vZ2xlIFRydXN0IFNlcnZpY2VzMQwwCgYD
+VQQDEwNXRTEwHhcNMjYwNjI3MDg0NjE0WhcNMjYwOTI1MDk0NjA5WjAYMRYwFAYD
+VQQDEw1zcHJpbmdmYWxsLmNjMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEO5Vp
+s7euzgdyNX8SqHGSq+PRhgQN5cL7HHXcUTHzJ3+xA2/cAhSvtm6ZY0I908Z0L4Gx
+LkHA+HgtjmpioVmoN6OCAh4wggIaMA4GA1UdDwEB/wQEAwIHgDATBgNVHSUEDDAK
+BggrBgEFBQcDATAMBgNVHRMBAf8EAjAAMB0GA1UdDgQWBBR2IdEPwtFYP6Ck+i7D
+qfp9zpZbmTAfBgNVHSMEGDAWgBSQd5I1Z8T/qMyp5nvZgHl7zJP5ODA1BggrBgEF
+BQcBAQQpMCcwJQYIKwYBBQUHMAKGGWh0dHA6Ly9pLnBraS5nb29nL3dlMS5jcnQw
+GAYDVR0RBBEwD4INc3ByaW5nZmFsbC5jYzATBgNVHSAEDDAKMAgGBmeBDAECATA2
+BgNVHR8ELzAtMCugKaAnhiVodHRwOi8vYy5wa2kuZ29vZy93ZTEvcmRvWmFQLUNF
+NFkuY3JsMIIBBQYKKwYBBAHWeQIEAgSB9gSB8wDxAHYA2AlVO5RPev/IFhlvlE+F
+q7D4/F6HVSYPFdEucrtFSxQAAAGfCHj9gwAABAMARzBFAiEAgvlZheALA9Fcy+BR
+Sk+ICQncNDHibQXNH8XwWctAGC8CIA/6Aru+8BaZXB2dWksySuQcT9fDQv4lqbp5
+usvIAPSCAHcAwjF+V0UZo0XufzjespBB68fCIVoiv3/Vta12mtkOUs0AAAGfCHj9
+YQAABAMASDBGAiEAnb5BjGderPk+Tsmud3KfCYqHv6Kw+2vfBBwmaO+levYCIQCF
+5lVEPIKH26p6kLTbiQqKlRv0G1P9124FmXs4nlkiKDAKBggqhkjOPQQDAgNJADBG
+AiEApI00P5NVLd8vVwq2zL8qsfy/swE+kvnY8+RetQY9S3ICIQC54miLVqgfazi2
+8yYfUhnCUkutv0Mde7yoFtwSYgWKFg==
+-----END CERTIFICATE-----
+subject=CN=springfall.cc
+issuer=C=US, O=Google Trust Services, CN=WE1
+---
+No client certificate CA names sent
+Peer signing digest: SHA256
+Peer signature type: ecdsa_secp256r1_sha256
+Negotiated TLS1.3 group: X25519MLKEM768
+---
+SSL handshake has read 3861 bytes and written 1551 bytes
+Verification: OK
+---
+New, TLSv1.3, Cipher is TLS_AES_256_GCM_SHA384
+Protocol: TLSv1.3
+Server public key is 256 bit
+This TLS version forbids renegotiation.
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+Early data was not sent
+Verify return code: 0 (ok)
+---
+```
+
+
+
+## 2026-07-31 (금)
+
+- 오늘도 영어 공부 노... 2주 안했네. 다음주부터 한다.
+- RSA 방식 이해했어! (진짜?)
+
 ## 2026-07-30 (목)
 
 - 오늘도 영어 공부 노.
-- 모듈로 합성수(n) 연산에서의 곱하기에서 역원은 특수한 수(n의 서로소)에 대해서만 성립한다.
 - 모듈로 소수 곱셈 or 모듈로 합성수 서로소 곱셈에서의 [역원은 쉽게 구할 수 있다.](https://blog.humminglab.io/posts/tls-cryptography-6-math/#%EB%AA%A8%EB%93%88%EB%A1%9C-%EC%97%B0%EC%82%B0)
-  - 곱하기에서 항등원은 1이다. 예를 들어 $$\mod{983}$$ 에서 곱하기 30에 대한 역원을 찾는 문제란 아래 $$x$$를 구하는 문제임.
-    - $$A \cdot 30 \mod{983} = B$$
-    - $$B \cdot x \mod{983} = A$$
-  - [확장된 유클리드 알고리즘](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm)으로 쉽게 구할 수 있다. 983과 30의 최소공약수를 구하는 문제를 생각해보자(983이 소수이기 때문에 최소공약수는 1임이 자명하긴 하지만 그게 목적이 아니다)유클리드 호제법으로 식을 나열한 다음 식을 정리하면 $$1 = -13 \cdot \textcolor{blue}{983} + 426 \cdot \textcolor{blue}{30}$$ 라는 식을 구할 수 있다. 여기서 $$-13 \cdot 983$$는 모듈로 연산에서 0이기 때문에 날라간다.
+  - 곱하기에서 항등원은 1이다. 역원을 찾는 문제란 어떤 수 $$A$$에 대해 $$A \cdot x = 1$$ 에서 $$x$$를 구하는 문제이다.
+  - [확장된 유클리드 알고리즘](https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm)으로 쉽게 구할 수 있다. 
+  - 예: $$\mod{983}$$ 에서 곱하기 30에 대한 역원을 찾아보자. 우선 $$983$$과 $$30$$의 최소공약수를 구하는 식을 생각해본다(983이 소수이기 때문에 최소공약수는 1임이 자명하긴 하지만 그게 목적이 아니다). 유클리드 호제법으로 식을 나열한 다음 식을 정리하면 $$1 = -13 \cdot \textcolor{blue}{983} + 426 \cdot \textcolor{blue}{30}$$ 라는 식을 구할 수 있다. 여기서 $$-13 \cdot 983$$는 모듈로 연산에서 0이기 때문에 날라간다. 남은 $$426$$가 $$\mod{983}$$ 곱셈에서 $$30$$의 역원이다.
+- 모듈로 합성수(n) 연산에서의 곱하기에서 역원은 n의 서로소 대해서만 성립한다. 예: $$\mod{33}$$ 에서 3 곱셈에 대한 역원은 없다. $$3 \mod{33}$$ 은 $$0$$이고, $$0$$에 어떤 수를 곱해도 1이 될 수 없기 때문.
+- $$ k^8 \equiv 1 \mod 15 $$ 에서 8은 오일러 피 함수($$ \Phi(n) $$)(이해 못함)에 의해 도출된 것. 이 함수는 서로소의 개수를 구하는 함수이다 (개수를 구하는 함수인데 어떻게 저 식이 또 연역되는진 이해가 잘 안된다) 대충 $$ (3 - 1) \cdot (5 - 1) = 8 $$ 여기서 $$k$$는 15의 서로소에 대해 성립하지만 음.... [중국인의 나머지 정리](https://namu.wiki/w/%EC%A4%91%EA%B5%AD%EC%9D%B8%EC%9D%98%20%EB%82%98%EB%A8%B8%EC%A7%80%20%EC%A0%95%EB%A6%AC)(이해 못함)에 의해서인지 어째서인지 $$ a \cdot b \equiv 1 \mod 8 $$ 를 만족하는 a, b를 찾으면 해당 a와 b를 지수 계산으로 암호화/복호화 가능. 15 미만 수 k에 대해서 $$ (k^a)^b \equiv k \mod 15 $$ 가 만족함.
+- 위와 비슷하게 $$ k^{20} \equiv 1 \mod 33 \quad (\gcd(k,33)=1)  $$ 라는 식에서 $$ a \cdot b \equiv 1 \mod 20 $$ 를 만족하는 두 수를 찾고 (예: \{3,7\}, \{13, 17\}) 두 수의 지수 계산으로 암호화/복호화가 가능함.
+  - $$ (k^3)^7 \equiv k \mod 33 $$
+  - $$ (k^7)^3 \equiv k \mod 33 $$
+  - $$ (k^{13})^{17} \equiv k \mod 33 $$
+  - $$ (k^{17})^{13} \equiv k \mod 33 $$
 - TLS의 큰 동작방식
   - 서버 검증 (인증서)
   - 키 교환 (RSA, DHE, ECDHE 등을 사용)
@@ -58,16 +215,22 @@ TIL 이라고 쓰고 잡탕구리일기라고 읽는다.
   - 스트림 암호: ChaCha20 (첨 들어봄)
 - 비대칭키의 일반적인 원리: 손오공의 공개키(Public Key)를 이용하여 나의 데이터를 암호화한다. 손오공은 암호화된 데이터를 받아들고 자신의 비밀키(Private Key)로 복호화하여 데이터를 확인한다.
 - 키 교환 방식은 크게 두 가지가 있음. RSA와 DH 방식
-  - RSA:
+  - RSA: 비밀키와 공개키를 이용하여 키 용도 데이터를 한 쪽에서 다른 쪽으로 전달. (공개키는 미리 배포되어 있음)
+  - DH(Diffie-Hellman) 계열: $$g^{mn} \mod k$$ 를 키로 사용함. $$m$$과 $$n$$은 각각 소중하게 보관.  아래 3개 값은 네트워크를 통해 전달(그냥 노출되도 무방).
+    - $$g^m \mod k$$
+    - $$g^n \mod k$$
+    - $$k$$
+- DH 계열은 일반화가 가능하다. mod k 이하 곱셈 n/m번 연산의 역연산이 어렵다는 점, n+m번 연산 했을 때 그 결과가 같다는 점만 같으면 다른 연산으로 대체 가능. 대표적인게 ECDH.
 - RSA-2048 동작 방식
-  - 손오공이 Public Key를 만들어 배포한다.
-    1. $$n$$: 1024bit 범위의 충분히 큰 소수 두개 p, q를 곱한 값. 2048bit 크기를 가짐.
+  - 손오공이 Public Key를 만든다.
+    1. $$n$$: 1024bit 범위의 충분히 큰 소수 두개 $$p$$, $$q$$를 곱한 값. 2048bit 크기를 가짐.
     2. $$e$$: 일반적인 경우 65537 (0x10001)을 사용
-  - 손오공은 오일러의 정리를 이용해 n으로부터
-  - 내가 암호화한다. 평문 $$k$$가 있을 때 $$E = k^{e} \mod n$$ 로 $$E$$를 만듬
-  - $$E$$를 손오공에게 전달
-- RSA는 암호화한 결과가 랜덤 특성을 가지지 못하므로, 일반 평문 텍스트 문장을 RSA로 암호화하는 경우 분석적인 공격으로 뚫릴 수 있는 위험이 있다. (극단적 예: `0x0000` 데이터를 암호화면 어떤 키든지 `0x0000`가 되고, `0x0001`도 `0x0001`로 됨.)
-- DHE(Diffie-Hellman Exchange): 키 교환 방식 중 하나이다.
+  - 손오공은 $$ e \cdot d = 1 \mod {\Phi(n)}$$ ( $$ \Phi(n) = (p - 1) \cdot (q - 1) $$) 를 만족하는 $$d$$ 값을 찾아놓는다. $$d$$ 값은 확장된 유클리드 알고리즘으로 쉽게 구할 수 있음. 그리고 충분히 큰 값임... 두 소수의 곱 크기와 비슷
+  - 손오공이 Public Key $$n$$과 $$e$$를 배포한다.
+  - 내가 암호화한다. 데이터 $$k$$가 있을 때 $$E = k^{e} \mod n$$ 로 $$E$$를 만듬
+  - $$E$$를 손오공에게 전달 (이 값은 암호화되어 있어서 공격자가 봐도 알 수 없따)
+  - 손오공은 $$ E^{d} \mod n $$ 으로 데이터 $$k$$를 구할 수 있다.
+- RSA는 암호화한 결과가 랜덤 특성을 가지지 못하므로, 일반 평문 텍스트 문장을 RSA로 암호화하는 경우 분석적인 공격으로 뚫릴 수 있는 위험이 있다. (극단적 예: `0x0000` 데이터를 암호화면 어떤 키든지 `0x0000`가 되고, `0x0001`도 `0x0001`로 됨.) 따라서 해시 함수랑 같이 쓴단다.
 
 ## 2026-07-29 (수)
 
@@ -76,8 +239,8 @@ TIL 이라고 쓰고 잡탕구리일기라고 읽는다.
 - 정수의 세계에서 모듈로 연산(`(mod p)`를 갖다붙이는 것)이란 나머지를 구하는 연산이며, 덧셈과 곱셈과 함께 표현할 수 있다.
   - 예1: 7 + 5 (mod 11) = 1
   - 예2: 7 * 5 (mod 11) = 2
-- **나누는 몫이 소수인 모듈로 소수 연산 (모듈로 소수 연산)**은 교환법칙, 결합법칙이 성립하고 각각 항등원과 역원이 존재한다.
-- 지수 연산 $$ E = k^e \pmod{p} $$ 에서 실제 그 계산을 하는건 어렵지 않다. 그런데 그 역방향은 쉬운 방법이 없다. (일반 연산에서는 로그 연산으로 손쉽다는 것과 대비된다.)
+- **나누는 몫이 소수인 모듈로 소수 연산 (모듈로 소수 연산)** 은 교환법칙, 결합법칙이 성립하고 각각 항등원과 역원이 존재한다.
+- 지수 연산 $$ E = k^e \pmod{p} $$ 에서 실제 그 계산을 하는건 어렵지 않다. 그런데 그 **역방향은 쉬운 방법이 없다.** (일반 연산에서는 로그 연산으로 손쉽다는 것과 대비된다.)
   - $$x = 2^6 \pmod{17} $$ 에서 $$x$$는 13으로 쉽게 계산할 수 있다. $$2^6$$은 32이고 `32 % 17 = 13`임.
   - 그런데 $$2^x \pmod{17} = 13$$에서 $$x$$를 구하려면 1부터 시작하여 Brute force 방식으로 구할 수 밖에 없다(고 한다. 왜인지는... 몰루~)
 
