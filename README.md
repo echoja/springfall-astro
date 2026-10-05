@@ -41,3 +41,7 @@ pnpm run deploy
 - All internal page links **must** end with `/` (e.g., `/ko/article/2024-02/tsup/`, `/ko/til/`).
 - Asset links (`/icon.png`, `/feed.xml`, CSS) do **not** get trailing slashes.
 - Redirect destinations in `astro.config.mjs` must also include trailing slashes.
+
+## License
+
+[MIT](./LICENSE) © 2026 echoja.
