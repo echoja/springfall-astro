@@ -2,7 +2,7 @@
 
 https://springfall.cc 블로그 소스코드.
 
-Astro 5 + React 19 + Tailwind CSS 4 + MDX + CodeHike. Cloudflare Pages에 배포.
+Astro 7 + React 19 + Tailwind CSS 4 + MDX + CodeHike. Cloudflare Pages에 배포.
 
 ## Agent Notes
 

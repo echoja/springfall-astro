@@ -2,8 +2,10 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import mdx from "@astrojs/mdx";
+import { unified } from "@astrojs/markdown-remark";
 import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import remarkCustomContainer from "@echoja/remark-custom-container";
 import remarkGfm from "remark-gfm";
@@ -44,18 +46,23 @@ export default defineConfig({
   site: "https://springfall.cc",
   output: "static",
   trailingSlash: "always",
+  compressHTML: true,
 
   image: {
     layout: "constrained",
     responsiveStyles: true,
   },
 
-  integrations: [
-    react(),
-    mdx({
+  markdown: {
+    processor: unified({
       remarkPlugins: [
         [remarkMath, { singleDollarTextMath: false }],
-        [remarkCustomContainer, customContainerOptions],
+        [
+          /** @type {import('@astrojs/markdown-remark').RemarkPlugin} */ (
+            remarkCustomContainer
+          ),
+          customContainerOptions,
+        ],
         remarkGfm,
         remarkInlineDates,
         [remarkCodeHike, chConfig],
@@ -109,8 +116,13 @@ export default defineConfig({
         rehypeSectionize,
       ],
     }),
-    sitemap(),
-  ],
+  },
+
+  integrations: [react(), mdx(), sitemap()],
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
 
   redirects: {
     "/post/12": "/ko/article/2023-03/draw-io-auto-layout/",

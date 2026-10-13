@@ -2,4 +2,4 @@
 
 Follow @README.md
 
-Astro 5 blog deployed to Cloudflare Pages.
+Astro 7 blog deployed to Cloudflare Pages.

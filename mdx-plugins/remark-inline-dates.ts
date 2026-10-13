@@ -6,7 +6,6 @@ type MarkdownNode = {
   type: string;
   value?: unknown;
   children?: MarkdownNode[];
-  [key: string]: unknown;
 };
 
 type MarkdownParent = {

@@ -3,7 +3,7 @@
 import { readFileSync } from "node:fs";
 import { resolve, relative } from "node:path";
 import { glob } from "node:fs/promises";
-import yaml from "js-yaml";
+import { load } from "js-yaml";
 import { articleSchema } from "@/schemas/article";
 
 const ARTICLES_DIR = resolve(import.meta.dirname, "../src/content/articles");
@@ -11,7 +11,7 @@ const ARTICLES_DIR = resolve(import.meta.dirname, "../src/content/articles");
 function parseFrontmatter(raw: string): Record<string, unknown> {
   const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!match) return {};
-  return (yaml.load(match[1]) as Record<string, unknown>) ?? {};
+  return (load(match[1]) as Record<string, unknown>) ?? {};
 }
 
 let errors = 0;

@@ -4,13 +4,12 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "jsx": "react-jsx",
-    "baseUrl": "src",
     "paths": {
-      "@common/*": ["common/*"],
-      "@modules/*": ["modules/*"],
-      "@components/*": ["components/*"],
-      "@layouts/*": ["layouts/*"],
-      "@/*": ["./*"]
+      "@common/*": ["./src/common/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@components/*": ["./src/components/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@/*": ["./src/*"]
     }
   }
 }
