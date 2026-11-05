@@ -3,6 +3,7 @@ import { uiText } from "@modules/i18n/strings";
 import { getLocaleFromPathname } from "@modules/i18n/util";
 import { i18n, type Locale } from "@/modules/i18n/types";
 import ThemeToggle from "./ThemeToggle.astro";
+import { addUtmSource } from "@modules/url/external-link";
 
 interface Props {
   lang?: string;
@@ -42,7 +43,7 @@ const themeLabels = {
   <div class="mt-10 mb-4 flex items-center justify-center gap-3">
     {buttons.map(({ link, icon, label }) => (
       <a
-        href={link}
+        href={addUtmSource(link)}
         target="_blank"
         rel="noopener noreferrer"
         class="rounded-sm border border-transparent p-2 transition hover:bg-gray-400/5 hover:opacity-90 hover:shadow-xs"
