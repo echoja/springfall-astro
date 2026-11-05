@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { addUtmSource } from "@modules/url/external-link";
 import kr from "./kr.jpg";
 
 export default function UI() {
@@ -15,11 +16,19 @@ export default function UI() {
       <img className="absolute" src={kr.src} alt="kr" />
       <div className="absolute p-3 text-sm">
         Photo by{" "}
-        <a href="https://unsplash.com/@hjlee200?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
+        <a
+          href={addUtmSource(
+            "https://unsplash.com/@hjlee200?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash",
+          )}
+        >
           Huijae Lee
         </a>{" "}
         on{" "}
-        <a href="https://unsplash.com/photos/a-city-street-with-cars-parked-on-the-side-of-the-road-MuDfQisNLoA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">
+        <a
+          href={addUtmSource(
+            "https://unsplash.com/photos/a-city-street-with-cars-parked-on-the-side-of-the-road-MuDfQisNLoA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash",
+          )}
+        >
           Unsplash
         </a>
       </div>

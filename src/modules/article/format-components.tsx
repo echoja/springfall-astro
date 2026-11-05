@@ -1,4 +1,5 @@
 import { CodeCopyButton } from "@components/CodeCopyButton";
+import { addUtmSource } from "@modules/url/external-link";
 import type {
   AnnotationHandler,
   BlockAnnotation,
@@ -174,7 +175,7 @@ export function Anchor({
             rel: "noopener noreferrer",
           }
         : {})}
-      href={href || ""}
+      href={addUtmSource(href || "")}
     >
       {children}
       {!isInternal && (
