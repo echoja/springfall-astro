@@ -47,6 +47,10 @@ export default defineConfig({
   output: "static",
   trailingSlash: "always",
   compressHTML: true,
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: "hover",
+  },
 
   image: {
     layout: "constrained",

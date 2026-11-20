@@ -34,6 +34,16 @@ const gtmId = import.meta.env.PUBLIC_GTM_ID;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style is:inline>
+      @view-transition {
+        navigation: auto;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        @view-transition {
+          navigation: none;
+        }
+      }
+    </style>
     <link rel="icon" href="/icon.png" />
     <link rel="stylesheet" href="/pretendard-variable-gov/pretendardvariable-gov-dynamic-subset.css" />
     <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="봄가을" />

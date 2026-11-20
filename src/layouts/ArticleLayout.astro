@@ -55,7 +55,7 @@ const tocLabels = {
 >
   <ArticlePageHeader lang={locale} />
   <main class="relative">
-    <article class="mb-20 lg:-translate-x-38 animate-fade-in">
+    <article class="mb-20 lg:-translate-x-38">
       <ArticleHeader
         title={title}
         createdAt={createdAt}
@@ -70,16 +70,6 @@ const tocLabels = {
   </main>
   <Giscus locale={locale} class="mt-8 lg:-translate-x-38" />
 </BaseLayout>
-
-<style>
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  .animate-fade-in {
-    animation: fadeIn 0.4s ease-out;
-  }
-</style>
 
 <script>
   document.addEventListener('click', (e) => {
